@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import '../providers/app_notifier.dart';
+import 'help_page.dart';
 import 'home_page.dart';
 import 'settings_page.dart';
 
@@ -46,6 +47,10 @@ class _MainViewState extends ConsumerState<MainView> {
               label: Text('Commit Messages'),
             ),
             SidebarItem(
+              leading: MacosIcon(CupertinoIcons.home),
+              label: Text('Help'),
+            ),
+            SidebarItem(
               leading: MacosIcon(CupertinoIcons.gear),
               label: Text('Settings'),
             ),
@@ -57,6 +62,7 @@ class _MainViewState extends ConsumerState<MainView> {
         children: const [
           HomePage(),
           HomePage(),
+          HelpPage(),
           SettingsPage(),
         ],
       ),

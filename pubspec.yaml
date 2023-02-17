@@ -9,15 +9,16 @@ environment:
 dependencies:
   collection: ^1.16.0
   cupertino_icons: ^1.0.5
+  file_picker: ^4.6.1
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.5+1
+  flutter_markdown: ^0.6.14
   hooks_riverpod: ^2.1.3
   macos_ui: ^1.10.0
-  shared_preferences: ^2.0.17
-  file_picker: ^4.6.1
+  mixin_logger: ^0.0.3
   pubspec_parse: ^1.2.1
-  mixin_logger: ^0.0.3  
+  shared_preferences: ^2.0.17
 
 dev_dependencies:
   flutter_lints: ^2.0.1
@@ -33,4 +34,4 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-  - pubspec.yaml
+    - pubspec.yaml
