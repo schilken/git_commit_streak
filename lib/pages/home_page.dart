@@ -3,6 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
+import '../components/async_value_widget.dart';
+import '../components/record_list_view.dart';
+import '../components/result_page_header.dart';
+import '../providers/git_info_notifier.dart';
 import '../providers/providers.dart';
 
 class HomePage extends ConsumerWidget {
@@ -11,6 +15,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appState = ref.watch(appNotifier);
+    final gitInfoAsyncValue = ref.watch(gitInfoNotifier);
     return Builder(
       builder: (context) {
         return MacosScaffold(
@@ -25,40 +30,34 @@ class HomePage extends ConsumerWidget {
                 MacosWindowScope.of(context).toggleSidebar();
               },
             ),
-            title: Text('Home Page'),
+            title: const Text('Commit Streak'),
             titleWidth: 250,
             actions: [
-              ToolBarPullDownButton(
-                label: "Actions",
-                icon: CupertinoIcons.ellipsis_circle,
-                tooltipMessage: "Perform tasks with the selected items",
-                items: [
-                  MacosPulldownMenuItem(
-                    title: const Text("Choose Folder"),
-                    onTap: () async {
-                      String? selectedDirectory =
-                          await FilePicker.platform.getDirectoryPath();
-                      if (selectedDirectory != null) {
-                        ref.read(appNotifier.notifier).setCurrentDirectory(
-                            directoryPath: selectedDirectory);
-                      }
-                    },
-                  ),
-                  MacosPulldownMenuItem(
-                    title: const Text("Scan Directory"),
-                    onTap: () {
-                      ref.read(appNotifier.notifier).scanDirectory();
-                    },
-                  ),
-                ],
-              ),
+              createToolBarPullDownButton(ref, appState.currentDirectory),
             ],
           ),
           children: [
             ContentArea(
               builder: (context, _) {
-                return Center(
-                  child: Text('Home ${appState.currentDirectory}'),
+                return Column(
+                  children: [
+                    ResultPageHeader(ref: ref),
+                    Expanded(
+                      child: AsyncValueWidget(
+                          value: gitInfoAsyncValue,
+                          data: (records) {
+                            if (records == null) {
+                              return const Center(
+                                  child: Text('Not yet scanned'));
+                            }
+                            if (records.isEmpty) {
+                              return const Center(
+                                  child: Text('No directories found'));
+                            }
+                            return RecordListView(records, ref);
+                          }),
+                    ),
+                  ],
                 );
               },
             ),
@@ -68,3 +67,34 @@ class HomePage extends ConsumerWidget {
     );
   }
 }
+
+ToolBarPullDownButton createToolBarPullDownButton(
+    WidgetRef ref, String currentDirectory) {
+  return ToolBarPullDownButton(
+    label: "Actions",
+    icon: CupertinoIcons.ellipsis_circle,
+    tooltipMessage: "Perform tasks with the selected items",
+    items: [
+      MacosPulldownMenuItem(
+        title: const Text("Choose Folder"),
+        onTap: () async {
+          String? selectedDirectory =
+              await FilePicker.platform.getDirectoryPath();
+          if (selectedDirectory != null) {
+            ref
+                .read(appNotifier.notifier)
+                .setCurrentDirectory(directoryPath: selectedDirectory);
+            ref.read(gitInfoNotifier.notifier).scan(selectedDirectory);
+          }
+        },
+      ),
+      MacosPulldownMenuItem(
+        title: const Text("Scan Directory"),
+        onTap: () {
+          ref.read(gitInfoNotifier.notifier).scan(currentDirectory);
+        },
+      ),
+    ],
+  );
+}
+
