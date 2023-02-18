@@ -1,24 +1,21 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'providers.dart';
 
 class SettingsState {
-  String currentDirectory;
-  String appVersion;
+  String committerName;
 
   SettingsState({
-    required this.currentDirectory,
-    required this.appVersion,
+    required this.committerName,
   });
 
   SettingsState copyWith({
-    String? currentDirectory,
-    String? appVersion,
+    String? committerName,
   }) {
     return SettingsState(
-      currentDirectory: currentDirectory ?? this.currentDirectory,
-      appVersion: appVersion ?? this.appVersion,
+      committerName: committerName ?? this.committerName,
     );
   }
 }
@@ -28,12 +25,18 @@ class SettingsNotifier extends Notifier<SettingsState> {
 
   @override
   SettingsState build() {
-    _preferencesRepository = ref.read(preferencesRepositoryProvider);
+    debugPrint('SettingsNotifier');
+    _preferencesRepository = ref.watch(preferencesRepositoryProvider);
     return SettingsState(
-      currentDirectory: _preferencesRepository.currentDirectory,
-      appVersion: _preferencesRepository.appVersion,
+      committerName: _preferencesRepository.committerName,
     );
   }
+
+  Future<void> setCommitterName(String name) async {
+    await _preferencesRepository.setCommitterName(name);
+    state = state.copyWith(committerName: name);
+  }
+
 }
 
 final settingsNotifier =

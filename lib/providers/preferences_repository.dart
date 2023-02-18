@@ -17,6 +17,15 @@ class PreferencesRepository {
   String get currentDirectory {
     return _prefs.getString('currentDirectory') ?? '.';
   }
+
+  Future<void> setCommitterName(String name) async {
+    await _prefs.setString('committerName', name);
+  }
+
+  String get committerName {
+    return _prefs.getString('committerName') ?? '';
+  }
+
 }
 
 final preferencesRepositoryProvider = Provider<PreferencesRepository>(

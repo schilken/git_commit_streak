@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-import '../providers/providers.dart';
+import '../components/settings_fields_view.dart';
 
-class SettingsPage extends ConsumerWidget {
+class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final appState = ref.watch(appNotifier);
+  Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
         return MacosScaffold(
@@ -24,13 +22,13 @@ class SettingsPage extends ConsumerWidget {
                 MacosWindowScope.of(context).toggleSidebar();
               },
             ),
-            title: Text('Settings'),
+            title: const Text('Settings'),
           ),
           children: [
             ContentArea(
               builder: (context, _) {
-                return Center(
-                  child: Text('Settings'),
+                return const Center(
+                  child: SettingsFieldsView(),
                 );
               },
             ),

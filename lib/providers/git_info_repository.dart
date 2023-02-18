@@ -52,8 +52,10 @@ class GitInfoRepository {
     return heatMap.keys.first;
   }
 
-  Future<List<GitInfoRecord>> scanGitRepos(String baseDirectoryPath) async {
-    final committerName = 'Alfred Schilken';
+  Future<List<GitInfoRecord>> scanGitRepos(
+    String baseDirectoryPath,
+    String committerName,
+  ) async {
     if (committerName.isEmpty) {
       throw Exception('Committer name is not set');
     }

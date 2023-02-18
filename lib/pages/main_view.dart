@@ -43,11 +43,7 @@ class _MainViewState extends ConsumerState<MainView> {
               label: Text('Commits Heat Map'),
             ),
             SidebarItem(
-              leading: MacosIcon(CupertinoIcons.home),
-              label: Text('Commit Messages'),
-            ),
-            SidebarItem(
-              leading: MacosIcon(CupertinoIcons.home),
+              leading: MacosIcon(CupertinoIcons.info),
               label: Text('Help'),
             ),
             SidebarItem(
@@ -60,7 +56,6 @@ class _MainViewState extends ConsumerState<MainView> {
       child: IndexedStack(
         index: _pageIndex,
         children: const [
-          HomePage(),
           HomePage(),
           HelpPage(),
           SettingsPage(),
