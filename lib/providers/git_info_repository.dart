@@ -71,6 +71,7 @@ class GitInfoRepository {
     if (committerName.isEmpty) {
       throw Exception('Committer name is not set');
     }
+    _projectHeatMap.clear();
     currentDirectory = baseDirectoryPath;
     final projectDirectoryPaths = (await _getGitDirectories(baseDirectoryPath))
         .where((path) => path.isNotEmpty)
