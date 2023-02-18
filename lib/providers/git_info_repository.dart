@@ -38,11 +38,19 @@ class GitInfoRepository {
       projectName: projectName,
       directoryPath: '$currentDirectory/$projectName',
       commitCountLast30days: 0,
-      latestCommit: DateTime.now(),
-      streakLength: 0,
+      latestCommit: latestCommitFromHeatMap(_projectHeatMap[projectName] ?? {}),
+      streakLength: streakLengthFromHeatMap(
+        _projectHeatMap[projectName] ?? {},
+        DateTime.now(),
+      ),
       timeRangeInDays: 180,
       heatMapData: _projectHeatMap[projectName] ?? {},
     );
+  }
+
+DateTime latestCommitFromHeatMap(HeatMap heatMap) {
+    if (heatMap.isEmpty) return DateTime.fromMillisecondsSinceEpoch(0);
+    return heatMap.keys.first;
   }
 
   Future<List<GitInfoRecord>> scanGitRepos(String baseDirectoryPath) async {
@@ -68,8 +76,31 @@ class GitInfoRepository {
         .whereType<GitInfoRecord>()
         .cast<GitInfoRecord>()
         .toList();
+    records.sort((a, b) => b.latestCommit.compareTo(a.latestCommit));
+    insertOverallRecord(records, calculateOverAllHeatMap(_projectHeatMap));
     return records;
   }
+
+  void insertOverallRecord(
+      List<GitInfoRecord> records, HeatMap overAllHeatMap) {
+    records.insert(
+      0,
+      GitInfoRecord(
+        projectName: 'All Projects',
+        directoryPath: '$currentDirectory',
+        commitCountLast30days: 0,
+        latestCommit: latestCommitFromHeatMap(overAllHeatMap),
+        streakLength: streakLengthFromHeatMap(
+          overAllHeatMap,
+          DateTime.now(),
+        ),
+        timeRangeInDays: 180,
+        heatMapData: overAllHeatMap,
+      ),
+    );
+//          commitCountLast30days: _commitCountLast30days(overAllHeatMap),
+  }
+
 
   String projectNameFromPath(String fullProjectPathName) {
     final strippedBaseFromPath =
@@ -103,6 +134,20 @@ class GitInfoRepository {
           ));
     }
     return totalHeatMap;
+  }
+
+  @visibleForTesting
+  int streakLengthFromHeatMap(HeatMap heatMap, DateTime now) {
+    final today = DateTime(now.year, now.month, now.day);
+    int dayCount = 0;
+    var date = today;
+    while (heatMap.containsKey(date)) {
+      dayCount++;
+      date = today.subtract(Duration(days: dayCount));
+      // strip hour because of problem with summer/wintetime adjustment
+      date = DateTime(date.year, date.month, date.day);
+    }
+    return dayCount;
   }
 
 }
