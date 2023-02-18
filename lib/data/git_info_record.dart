@@ -2,7 +2,6 @@
 class GitInfoRecord {
   final String projectName;
   final String directoryPath;
-  final List<String> commitMessages;
   final Map<DateTime, int> heatMapData;
   final DateTime latestCommit;
   final int streakLength;
@@ -12,7 +11,6 @@ class GitInfoRecord {
   GitInfoRecord({
     required this.projectName,
     required this.directoryPath,
-    this.commitMessages = const [],
     this.heatMapData = const {},
     required this.latestCommit,
     required this.streakLength,
@@ -20,14 +18,12 @@ class GitInfoRecord {
     required this.commitCountLast30days,
   });
 
-  int get totalCommitCount => heatMapData.values.isEmpty
-      ? commitMessages.length
-      : heatMapData.values.reduce((sum, val) => sum + val);
+  int get totalCommitCount =>
+      heatMapData.values.reduce((sum, val) => sum + val);
 
   GitInfoRecord copyWith({
-    String? title,
-    String? directoryPathName,
-    List<String>? commitMessages,
+    String? projectName,
+    String? directoryPath,
     Map<DateTime, int>? heatMapData,
     DateTime? latestCommit,
     int? streakLength,
@@ -35,9 +31,8 @@ class GitInfoRecord {
     int? commitCountLast30days,
   }) {
     return GitInfoRecord(
-      projectName: title ?? this.projectName,
-      directoryPath: directoryPathName ?? this.directoryPath,
-      commitMessages: commitMessages ?? this.commitMessages,
+      projectName: projectName ?? this.projectName,
+      directoryPath: directoryPath ?? this.directoryPath,
       heatMapData: heatMapData ?? this.heatMapData,
       latestCommit: latestCommit ?? this.latestCommit,
       streakLength: streakLength ?? this.streakLength,
