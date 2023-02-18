@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../data/git_info_record.dart';
+import 'record_tile.dart';
 
 class RecordListView extends StatelessWidget {
   const RecordListView(
@@ -20,11 +21,8 @@ class RecordListView extends StatelessWidget {
       itemBuilder: (_, index) {
         final record = records[index];
         return Material(
-          child: ListTile(
-            title: Text(
-              record.projectName,
-            ),
-            subtitle: Text(record.directoryPath),
+          child: RecordTile(
+            record: record,
           ),
         );
       },
