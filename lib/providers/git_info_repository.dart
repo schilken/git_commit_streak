@@ -1,22 +1,25 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_constants.dart';
 import '../data/git_info_record.dart';
-import '../utils/git_log_utils.dart';
-import '../utils/process_utils.dart';
+import '../utils/system_command.dart';
 
 typedef HeatMap = Map<DateTime, int>;
 typedef ProjectHeatMap = Map<String, HeatMap>;
 
 // find . -type d -name ".git"
 class GitInfoRepository {
-  String? currentDirectory;
-  final _gitLogUtils = GitLogUtils();
+  
+  GitInfoRepository({
+    required this.systemCommand,
+  });
+
+  final SystemCommand systemCommand;
+
   final ProjectHeatMap _projectHeatMap = {};
+  String? currentDirectory;
 
   Future<List<String>> _getGitDirectories(String directory) async {
     final arguments = [
@@ -26,12 +29,26 @@ class GitInfoRepository {
       '-name',
       '.git',
     ];
-    return runShellCommand(
+    return systemCommand.runShellCommand(
       'find',
       arguments,
       directory,
     );
   }
+
+  Future<List<String>> getGitLogForProject(String directoryPath) async {
+    final parameters = [
+      'log',
+      '-n ${AppConstants.maxGitMessages}',
+      '--pretty=%ci|%cn| %s',
+    ];
+    return await systemCommand.runShellCommand(
+      'git',
+      parameters,
+      directoryPath,
+    );
+  }
+
 
   GitInfoRecord? _createRecord(String projectName) {
     final heatMap = _projectHeatMap[projectName] ?? {};
@@ -79,13 +96,12 @@ class GitInfoRepository {
             .replaceFirst('.git', '')
             .replaceFirst('./', ''));
     for (final projectDirectory in projectDirectoryPaths) {
-      final logLines = await _gitLogUtils.getGitLogForProject(projectDirectory);
+      final logLines = await getGitLogForProject(projectDirectory);
       final filteredLines = logLines
           .where((line) => line.isNotEmpty && line.contains(committerName));
       final heatMap = heatMapFromLines(filteredLines);
       _projectHeatMap[projectNameFromPath(projectDirectory)] = heatMap;
     }
-//    debugPrint(_projectHeatMap.toString());
     final records = projectDirectoryPaths
         .map((path) => _createRecord(projectNameFromPath(path)))
         .whereType<GitInfoRecord>()
@@ -166,6 +182,6 @@ class GitInfoRepository {
 }
 
 final gitInfoRepositoryProvider = Provider<GitInfoRepository>((ref) {
-  final gitInfoRepository = GitInfoRepository();
-  return gitInfoRepository;
+  final systemCommand = ref.watch(systemCommandProvider);
+  return GitInfoRepository(systemCommand: systemCommand);
 });
