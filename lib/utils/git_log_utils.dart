@@ -12,7 +12,7 @@ class GitLogUtils {
   Future<List<String>> getGitLogForProject(String directoryPath) async {
     final parameters = [
       'log',
-      '-n ${Constants.maxGitMessages}',
+      '-n ${AppConstants.maxGitMessages}',
       '--pretty=%ci|%cn| %s',
     ];
     return await runShellCommand('git', parameters, directoryPath);

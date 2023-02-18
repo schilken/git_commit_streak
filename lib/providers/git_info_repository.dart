@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../app_constants.dart';
 import '../data/git_info_record.dart';
 import '../utils/git_log_utils.dart';
 import '../utils/process_utils.dart';
@@ -33,16 +34,17 @@ class GitInfoRepository {
   }
 
   GitInfoRecord? _createRecord(String projectName) {
+    final heatMap = _projectHeatMap[projectName] ?? {};
     return GitInfoRecord(
       projectName: projectName,
       directoryPath: '$currentDirectory/$projectName',
-      commitCountLast30days: 0,
-      latestCommit: latestCommitFromHeatMap(_projectHeatMap[projectName] ?? {}),
+      commitCountLast30days: _commitCountLast30days(heatMap),
+      latestCommit: latestCommitFromHeatMap(heatMap),
       streakLength: streakLengthFromHeatMap(
-        _projectHeatMap[projectName] ?? {},
+        heatMap,
         DateTime.now(),
       ),
-      timeRangeInDays: 180,
+      timeRangeInDays: AppConstants.timeRangeInDays,
       heatMapData: _projectHeatMap[projectName] ?? {},
     );
   }
@@ -50,6 +52,16 @@ class GitInfoRepository {
   DateTime latestCommitFromHeatMap(HeatMap heatMap) {
     if (heatMap.isEmpty) return DateTime.fromMillisecondsSinceEpoch(0);
     return heatMap.keys.first;
+  }
+
+  int _commitCountLast30days(HeatMap heatMap) {
+    int totalCount = 0;
+    heatMap.forEach((date, commitCount) {
+      if (date.isAfter(DateTime.now().subtract(Duration(days: 30)))) {
+        totalCount += commitCount;
+      }
+    });
+    return totalCount;
   }
 
   Future<List<GitInfoRecord>> scanGitRepos(
@@ -90,13 +102,13 @@ class GitInfoRepository {
       GitInfoRecord(
         projectName: 'All Projects',
         directoryPath: '$currentDirectory',
-        commitCountLast30days: 0,
+        commitCountLast30days: _commitCountLast30days(overAllHeatMap),
         latestCommit: latestCommitFromHeatMap(overAllHeatMap),
         streakLength: streakLengthFromHeatMap(
           overAllHeatMap,
           DateTime.now(),
         ),
-        timeRangeInDays: 180,
+        timeRangeInDays: AppConstants.timeRangeInDays,
         heatMapData: overAllHeatMap,
       ),
     );
