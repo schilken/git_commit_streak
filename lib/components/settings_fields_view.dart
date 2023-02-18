@@ -15,10 +15,25 @@ class SettingsFieldsView extends ConsumerStatefulWidget {
 
 class _SettingsFieldsViewState extends ConsumerState<SettingsFieldsView> {
   final _controller = TextEditingController();
+  late FocusNode _focusNode;
 
   @override
   void initState() {
+    _focusNode = FocusNode();
+    _focusNode.addListener(_onFocusChange);
     super.initState();
+  }
+
+  @override
+  dispose() {
+    _focusNode.dispose();
+    _controller.dispose();
+  }
+
+  void _onFocusChange() {
+    if (_focusNode.hasFocus == false) {
+      ref.read(settingsNotifier.notifier).setCommitterName(_controller.text);
+    }
   }
 
   @override
@@ -37,22 +52,13 @@ class _SettingsFieldsViewState extends ConsumerState<SettingsFieldsView> {
           width: 300.0,
           child: MacosTextField(
             controller: _controller,
-            placeholder: 'Enter name here',
+            focusNode: _focusNode,
+            placeholder: 'Enter Committer',
             clearButtonMode: OverlayVisibilityMode.editing,
             maxLines: 1,
             onSubmitted: (value) =>
                 ref.read(settingsNotifier.notifier).setCommitterName(value),
           ),
-        ),
-        gapHeight12,
-        PushButton(
-          buttonSize: ButtonSize.large,
-          isSecondary: true,
-//          color: Colors.white,
-          onPressed: () => ref
-              .read(settingsNotifier.notifier)
-              .setCommitterName(_controller.text),
-          child: Text('Save'),
         ),
       ],
     );

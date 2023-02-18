@@ -33,6 +33,7 @@ class SettingsNotifier extends Notifier<SettingsState> {
   }
 
   Future<void> setCommitterName(String name) async {
+    debugPrint('setCommitterName |$name|');
     await _preferencesRepository.setCommitterName(name);
     state = state.copyWith(committerName: name);
   }
