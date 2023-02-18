@@ -16,7 +16,6 @@ class GitInfoRepository {
   String? currentDirectory;
   final _gitLogUtils = GitLogUtils();
   final ProjectHeatMap _projectHeatMap = {};
-  
 
   Future<List<String>> _getGitDirectories(String directory) async {
     final arguments = [
@@ -48,7 +47,7 @@ class GitInfoRepository {
     );
   }
 
-DateTime latestCommitFromHeatMap(HeatMap heatMap) {
+  DateTime latestCommitFromHeatMap(HeatMap heatMap) {
     if (heatMap.isEmpty) return DateTime.fromMillisecondsSinceEpoch(0);
     return heatMap.keys.first;
   }
@@ -66,8 +65,9 @@ DateTime latestCommitFromHeatMap(HeatMap heatMap) {
             .replaceFirst('./', ''));
     for (final projectDirectory in projectDirectoryPaths) {
       final logLines = await _gitLogUtils.getGitLogForProject(projectDirectory);
-      final heatMap =
-          heatMapFromLines(logLines.where((line) => line.isNotEmpty));
+      final filteredLines = logLines
+          .where((line) => line.isNotEmpty && line.contains(committerName));
+      final heatMap = heatMapFromLines(filteredLines);
       _projectHeatMap[projectNameFromPath(projectDirectory)] = heatMap;
     }
 //    debugPrint(_projectHeatMap.toString());
@@ -100,7 +100,6 @@ DateTime latestCommitFromHeatMap(HeatMap heatMap) {
     );
 //          commitCountLast30days: _commitCountLast30days(overAllHeatMap),
   }
-
 
   String projectNameFromPath(String fullProjectPathName) {
     final strippedBaseFromPath =
@@ -149,7 +148,6 @@ DateTime latestCommitFromHeatMap(HeatMap heatMap) {
     }
     return dayCount;
   }
-
 }
 
 final gitInfoRepositoryProvider = Provider<GitInfoRepository>((ref) {
