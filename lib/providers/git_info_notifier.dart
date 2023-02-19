@@ -55,12 +55,15 @@ final totalRecordCountProvider = Provider<int>((ref) {
       orElse: () => 0);
 });
 
-final todayCommitCountProvider = Provider<int>((ref) {
+
+final todayCommitCountAsyncProvider = Provider<AsyncValue<int>>((ref) {
   final gitInfoAsyncValue = ref.watch(gitInfoNotifier);
-  return gitInfoAsyncValue.maybeMap<int>(
-      data: (data) {
-        final records = data.value ?? [];
-        return 0; //records[0].commitCountToday;
+//  debugPrint('todayCommitCountProvider ${gitInfoAsyncValue.hasValue}');
+  return gitInfoAsyncValue.maybeMap<AsyncValue<int>>(data: (data) {
+    final records = data.value ?? [];
+    return AsyncValue.data(records[0].commitCountToday);
       },
-      orElse: () => 0);
+      orElse: () {
+    return const AsyncValue.loading();
+  });
 });

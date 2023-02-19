@@ -4,16 +4,22 @@ import 'package:macos_ui/macos_ui.dart';
 
 // taken from https://github.com/bizz84/complete-flutter-course
 class AsyncValueWidget<T> extends StatelessWidget {
-  const AsyncValueWidget({super.key, required this.value, required this.data});
+  const AsyncValueWidget({
+    super.key,
+    required this.value,
+    required this.data,
+    this.spinnerRadius = 30.0,
+  });
   final AsyncValue<T> value;
   final Widget Function(T) data;
+  final double spinnerRadius; 
 
   @override
   Widget build(BuildContext context) {
     return value.when(
       data: data,
       error: (e, st) => Center(child: ErrorMessageWidget(e.toString())),
-      loading: () => const Center(child: ProgressCircle(radius: 30)),
+      loading: () => Center(child: ProgressCircle(radius: spinnerRadius)),
     );
   }
 }

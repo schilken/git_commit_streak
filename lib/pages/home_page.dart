@@ -88,13 +88,19 @@ class CommitsToday extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final count = ref.watch(todayCommitCountProvider);
-    return count == 0
-        ? Text(
+    final countAsyncValue = ref.watch(todayCommitCountAsyncProvider);
+    return AsyncValueWidget(
+      value: countAsyncValue,
+      spinnerRadius: 10,
+      data: (count) {
+        return count == 0
+            ? const Text(
             'Not yet committed today!',
             style: TextStyle(color: Colors.red),
           )
         : Text('$count commits today!');
+      },
+    );
   }
 }
 
