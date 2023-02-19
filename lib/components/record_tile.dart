@@ -32,8 +32,8 @@ class _RecordTileState extends State<RecordTile> {
         ],
       ),
       subtitle: Padding(
-        padding: const EdgeInsets.all(
-          16,
+        padding: const EdgeInsets.symmetric(
+          vertical: 16,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

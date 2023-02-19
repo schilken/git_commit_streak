@@ -16,16 +16,26 @@ class RecordListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
       itemCount: records.length,
       itemBuilder: (_, index) {
         final record = records[index];
         return Material(
-          child: RecordTile(
-            record: record,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RecordTile(
+              record: record,
+            ),
           ),
         );
       },
+      separatorBuilder: (BuildContext context, int index) {
+        return const Divider(
+          height: 0,
+          thickness: 2,
+        );
+      },
+
     );
   }
 }
