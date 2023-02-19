@@ -7,6 +7,7 @@ class GitInfoRecord {
   final int streakLength;
   final int timeRangeInDays;
   final int commitCountLast30days;
+  final int commitCountToday;
 
   GitInfoRecord({
     required this.projectName,
@@ -16,6 +17,7 @@ class GitInfoRecord {
     required this.streakLength,
     required this.timeRangeInDays,
     required this.commitCountLast30days,
+    required this.commitCountToday,
   });
 
   int get totalCommitCount =>
@@ -29,6 +31,7 @@ class GitInfoRecord {
     int? streakLength,
     int? timeRangeInDays,
     int? commitCountLast30days,
+    int? commitCountToday,
   }) {
     return GitInfoRecord(
       projectName: projectName ?? this.projectName,
@@ -39,6 +42,7 @@ class GitInfoRecord {
       timeRangeInDays: timeRangeInDays ?? this.timeRangeInDays,
       commitCountLast30days:
           commitCountLast30days ?? this.commitCountLast30days,
+      commitCountToday: commitCountToday ?? this.commitCountToday,
     );
   }
 }

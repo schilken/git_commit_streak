@@ -1,7 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
+
+import 'package:git_commit_streak/utils/utils.dart';
 
 import '../components/async_value_widget.dart';
 import '../components/record_list_view.dart';
@@ -30,8 +34,14 @@ class HomePage extends ConsumerWidget {
                 MacosWindowScope.of(context).toggleSidebar();
               },
             ),
-            title: const Text('Commit Streak'),
-            titleWidth: 250,
+            titleWidth: 450,
+            title: Row(
+              children: [
+                const Text('Git Commit Streak'),
+                gapWidth12,
+                CommitsToday(ref: ref),
+              ],
+            ),
             actions: [
               createToolBarPullDownButton(ref, appState.currentDirectory),
             ],
@@ -65,6 +75,26 @@ class HomePage extends ConsumerWidget {
         );
       },
     );
+  }
+}
+
+class CommitsToday extends StatelessWidget {
+  const CommitsToday({
+    super.key,
+    required this.ref,
+  });
+
+  final WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context) {
+    final count = ref.watch(todayCommitCountProvider);
+    return count == 0
+        ? Text(
+            'Not yet committed today!',
+            style: TextStyle(color: Colors.red),
+          )
+        : Text('$count commits today!');
   }
 }
 

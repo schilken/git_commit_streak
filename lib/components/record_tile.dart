@@ -1,14 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'dart:math' as math;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-import '../app_constants.dart';
 import '../data/git_info_record.dart';
-import '../providers/providers.dart';
 import 'heat_map_widget.dart';
 
 class RecordTile extends StatefulWidget {
@@ -31,7 +27,7 @@ class _RecordTileState extends State<RecordTile> {
         children: [
           Text(
             widget.record.projectName,
-            style: Theme.of(context).textTheme.headline5,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ],
       ),
@@ -55,9 +51,7 @@ class _RecordTileState extends State<RecordTile> {
               ),
               const SizedBox(height: 4),
               Text(
-                  'Commits last 30 days: ${widget.record.commitCountLast30days}'),
-              const SizedBox(height: 4),
-              Text('Total commits: ${widget.record.totalCommitCount}'),
+                  'Commits Total: ${widget.record.totalCommitCount} – last 30 days: ${widget.record.commitCountLast30days} – today: ${widget.record.commitCountToday}'),
               const SizedBox(height: 4),
               Text(infoForSelectedDate ?? 'no date selected'),
               HeatMapWidget(

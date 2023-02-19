@@ -55,7 +55,8 @@ class GitInfoRepository {
     return GitInfoRecord(
       projectName: projectName,
       directoryPath: '$currentDirectory/$projectName',
-      commitCountLast30days: _commitCountLast30days(heatMap),
+      commitCountLast30days: _commitCountLastDays(heatMap, 30),
+      commitCountToday: _commitCountLastDays(heatMap, 1),
       latestCommit: latestCommitFromHeatMap(heatMap),
       streakLength: streakLengthFromHeatMap(
         heatMap,
@@ -71,10 +72,10 @@ class GitInfoRepository {
     return heatMap.keys.first;
   }
 
-  int _commitCountLast30days(HeatMap heatMap) {
+  int _commitCountLastDays(HeatMap heatMap, int days) {
     int totalCount = 0;
     heatMap.forEach((date, commitCount) {
-      if (date.isAfter(DateTime.now().subtract(Duration(days: 30)))) {
+      if (date.isAfter(DateTime.now().subtract(Duration(days: days)))) {
         totalCount += commitCount;
       }
     });
@@ -119,7 +120,8 @@ class GitInfoRepository {
       GitInfoRecord(
         projectName: 'All Projects',
         directoryPath: '$currentDirectory',
-        commitCountLast30days: _commitCountLast30days(overAllHeatMap),
+        commitCountLast30days: _commitCountLastDays(overAllHeatMap, 30),
+        commitCountToday: _commitCountLastDays(overAllHeatMap, 1),
         latestCommit: latestCommitFromHeatMap(overAllHeatMap),
         streakLength: streakLengthFromHeatMap(
           overAllHeatMap,
