@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'notification_service.dart';
 import 'providers.dart';
-import 'reminder_provider.dart';
 
 class SettingsState {
   String committerName;

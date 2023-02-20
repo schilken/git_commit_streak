@@ -95,10 +95,10 @@ class CommitsToday extends StatelessWidget {
       data: (count) {
         return count == 0
             ? const Text(
-            'Not yet committed today!',
+                'Not yet committed today',
             style: TextStyle(color: Colors.red),
           )
-        : Text('$count commits today!');
+            : Text('$count commits today👍');
       },
     );
   }

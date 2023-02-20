@@ -76,7 +76,7 @@ class _SettingsFieldsViewState extends ConsumerState<SettingsFieldsView> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Activate Reminders'),
+            const Text('Activate Reminders'),
             MacosSwitch(
               value: settings.isReminderActive,
               onChanged: (value) {
