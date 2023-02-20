@@ -51,9 +51,9 @@ class _RecordTileState extends State<RecordTile> {
               ),
               const SizedBox(height: 4),
               Text(
-                  'Commits Total: ${widget.record.totalCommitCount} – last 30 days: ${widget.record.commitCountLast30days} – today: ${widget.record.commitCountToday}'),
+                  'Commits Total: ${widget.record.totalCommitCount} – last month: ${widget.record.commitCountLast30days} – today: ${widget.record.commitCountToday}'),
               const SizedBox(height: 4),
-              Text(infoForSelectedDate ?? 'no date selected'),
+              Text(infoForSelectedDate ?? 'No date selected'),
               HeatMapWidget(
                   widget.record.heatMapData, widget.record.timeRangeInDays,
                   (info) {
