@@ -60,9 +60,6 @@ class AppNotifier extends Notifier<AppState> {
     debugPrint('setDefaultDirectory: $directoryPath');
   }
 
-  void scanDirectory() {
-    debugPrint('scanDirectory');
-  }
 }
 
 final appNotifier = NotifierProvider<AppNotifier, AppState>(AppNotifier.new);

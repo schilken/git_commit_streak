@@ -26,6 +26,12 @@ class PreferencesRepository {
     return _prefs.getString('committerName') ?? '';
   }
 
+  Future<void> setReminderActive(bool isActive) async {
+    await _prefs.setBool('isreminderActive', isActive);
+  }
+
+  bool get isreminderActive => _prefs.getBool('isreminderActive') ?? false;
+
 }
 
 final preferencesRepositoryProvider = Provider<PreferencesRepository>(

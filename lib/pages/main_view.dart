@@ -5,6 +5,7 @@ import 'package:macos_ui/macos_ui.dart';
 
 import '../providers/app_notifier.dart';
 import '../providers/git_info_notifier.dart';
+import '../providers/reminder_provider.dart';
 import 'help_page.dart';
 import 'home_page.dart';
 import 'settings_page.dart';
@@ -18,12 +19,14 @@ class MainView extends ConsumerStatefulWidget {
 
 class _MainViewState extends ConsumerState<MainView> {
   int _pageIndex = 0;
+  late Reminder reminder;
 
   @override
   void initState() {
     Future<void>.delayed(const Duration(milliseconds: 100), () {
       final currentDirectory = ref.watch(appNotifier).currentDirectory;
       ref.read(gitInfoNotifier.notifier).scan(currentDirectory);
+      reminder = ref.watch(reminderProvider);
     });
     super.initState();
   }

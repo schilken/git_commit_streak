@@ -39,11 +39,12 @@ class _SettingsFieldsViewState extends ConsumerState<SettingsFieldsView> {
 
   @override
   Widget build(BuildContext context) {
-    _controller.text = ref.watch(settingsNotifier).committerName;
+    final settings = ref.watch(settingsNotifier);
+    _controller.text = settings.committerName;
     debugPrint('SettingsFieldsView build ${_controller.text}');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Text('Committer\'s Name to filter all Commits'),
         const SizedBox(
@@ -62,16 +63,30 @@ class _SettingsFieldsViewState extends ConsumerState<SettingsFieldsView> {
           ),
         ),
         gapHeight12,
-        PushButton(
-          buttonSize: ButtonSize.large,
-          isSecondary: true,
-          onPressed: () async {
-            ref.read(notificationServiceProvider).init();
-            ref.read(notificationServiceProvider).requestPermissions();
-          },
-          child: Text('Activate Notifications'),
+        // PushButton(
+        //   buttonSize: ButtonSize.large,
+        //   isSecondary: true,
+        //   onPressed: () async {
+        //     ref.read(notificationServiceProvider).init();
+        //     ref.read(notificationServiceProvider).requestPermissions();
+        //   },
+        //   child: Text('Activate Notifications'),
+        // ),
+        // gapHeight8,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Activate Reminders'),
+            MacosSwitch(
+              value: settings.isReminderActive,
+              onChanged: (value) {
+                ref.read(settingsNotifier.notifier).setReminderActive(value);
+              },
+            ),
+          ],
         ),
         gapHeight8,
+        if (settings.isReminderActive)
         PushButton(
           buttonSize: ButtonSize.large,
           isSecondary: true,
