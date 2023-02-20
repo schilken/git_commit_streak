@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import '../data/git_info_record.dart';
+import '../utils/app_sizes.dart';
 import 'heat_map_widget.dart';
 
 class RecordTile extends StatefulWidget {
@@ -43,16 +44,16 @@ class _RecordTileState extends State<RecordTile> {
                 'Streak: ${widget.record.streakLength} days',
                 style: MacosTheme.of(context).typography.title2,
               ),
-              const SizedBox(height: 4),
+              gapHeight4,
               CapacityIndicator(
                 value: 100.0 * math.min(widget.record.streakLength, 30) / 30.0,
                 splits: 30,
                 discrete: true,
               ),
-              const SizedBox(height: 4),
+              gapHeight4,
               Text(
                   'Commits Total: ${widget.record.totalCommitCount} – last month: ${widget.record.commitCountLast30days} – today: ${widget.record.commitCountToday}'),
-              const SizedBox(height: 4),
+              gapHeight4,
               Text(infoForSelectedDate ?? 'No date selected'),
               HeatMapWidget(
                   widget.record.heatMapData, widget.record.timeRangeInDays,

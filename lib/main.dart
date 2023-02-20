@@ -16,7 +16,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await SharedPreferences.getInstance();
   final cron = Cron();
-  cron.schedule(Schedule.parse('*/2 * * * *'), () async {
+  cron.schedule(Schedule.parse('*/15 * * * *'), () async {
     log.i('cron task - every two minutes');
   });
   final pubspec = Pubspec.parse(await rootBundle.loadString('pubspec.yaml'));
@@ -41,7 +41,7 @@ class MainApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    
+
     return MacosApp(
       title: 'GitCommitStreak',
       theme: MacosThemeData.light(),

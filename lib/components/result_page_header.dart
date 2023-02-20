@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:git_commit_streak/utils/app_sizes.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 import '../providers/app_notifier.dart';
 import '../providers/git_info_notifier.dart';
@@ -24,7 +27,19 @@ class ResultPageHeader extends StatelessWidget {
         children: [
           const Text('Scanned Directory: '),
           Expanded(child: Text(appState.currentDirectory)),
-          const SizedBox(width: 8),
+          gapWidth8,
+          MacosIconButton(
+            backgroundColor: Colors.transparent,
+            icon: const MacosIcon(
+//                        size: 32,
+              CupertinoIcons.refresh,
+            ),
+            shape: BoxShape.circle,
+            onPressed: () => ref
+                .read(gitInfoNotifier.notifier)
+                .scan(appState.currentDirectory),
+          ),
+          gapWidth8,
           Text('found $selectedRecordCount Repositories'),
         ],
       ),
