@@ -1,3 +1,4 @@
+import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,6 +15,10 @@ const loggerFolder = '/tmp/git_commit_streak_log';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await SharedPreferences.getInstance();
+  final cron = Cron();
+  cron.schedule(Schedule.parse('*/2 * * * *'), () async {
+    log.i('cron task - every two minutes');
+  });
   final pubspec = Pubspec.parse(await rootBundle.loadString('pubspec.yaml'));
   final version = pubspec.version;
 //  debugPrint('version from pubspec.yaml: $version');
@@ -36,6 +41,7 @@ class MainApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    
     return MacosApp(
       title: 'GitCommitStreak',
       theme: MacosThemeData.light(),

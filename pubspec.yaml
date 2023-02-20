@@ -8,12 +8,14 @@ environment:
 
 dependencies:
   collection: ^1.16.0
+  cron: ^0.5.1
   cupertino_icons: ^1.0.5
-  file_picker: ^4.6.1
+  file_picker: ^5.2.5
   flutter:
     sdk: flutter
   flutter_heatmap_calendar: ^1.0.5
   flutter_hooks: ^0.18.5+1
+  flutter_local_notifications: ^13.0.0
   flutter_markdown: ^0.6.14
   hooks_riverpod: ^2.1.3
   intl: ^0.18.0

@@ -4,6 +4,7 @@ import 'package:git_commit_streak/utils/utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
+import '../providers/notification_service.dart';
 import '../providers/providers.dart';
 
 class SettingsFieldsView extends ConsumerStatefulWidget {
@@ -59,6 +60,27 @@ class _SettingsFieldsViewState extends ConsumerState<SettingsFieldsView> {
             onSubmitted: (value) =>
                 ref.read(settingsNotifier.notifier).setCommitterName(value),
           ),
+        ),
+        gapHeight12,
+        PushButton(
+          buttonSize: ButtonSize.large,
+          isSecondary: true,
+          onPressed: () async {
+            ref.read(notificationServiceProvider).init();
+            ref.read(notificationServiceProvider).requestPermissions();
+          },
+          child: Text('Activate Notifications'),
+        ),
+        gapHeight8,
+        PushButton(
+          buttonSize: ButtonSize.large,
+          isSecondary: true,
+          onPressed: () async {
+            await ref
+                .read(notificationServiceProvider)
+                .showNotification('Test Notification');
+          },
+          child: Text('Test Notification'),
         ),
       ],
     );

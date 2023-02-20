@@ -14,7 +14,7 @@ class SystemCommand {
       workingDirectory: directory,
     );
     if (process.exitCode != 0) {
-      log.w('stderr: ${process.stderr}');
+      log.w('stderr: ${process.stderr} $directory');
       return [];
     } else {
       final lines = process.stdout.split('\n');
