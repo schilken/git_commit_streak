@@ -20,6 +20,7 @@ class GitInfoRepository {
 
   final ProjectHeatMap _projectHeatMap = {};
   String? currentDirectory;
+  int maxGitMessages = AppConstants.maxGitMessages;
 
   Future<List<String>> _getGitDirectories(String directory) async {
     final arguments = [
@@ -39,7 +40,7 @@ class GitInfoRepository {
   Future<List<String>> getGitLogForProject(String directoryPath) async {
     final parameters = [
       'log',
-      '-n ${AppConstants.maxGitMessages}',
+      '-n $maxGitMessages',
       '--pretty=%ci|%cn| %s',
     ];
     return await systemCommand.runShellCommand(
@@ -82,6 +83,16 @@ class GitInfoRepository {
     return totalCount;
   }
 
+  Future<int> calcCommitCountOfToday(
+    String baseDirectoryPath,
+    String committerName,
+  ) async {
+    maxGitMessages = 10;
+    await buildHeatMap(baseDirectoryPath, committerName);
+    final overAllHeatMap = calculateOverAllHeatMap(_projectHeatMap);
+    return _commitCountLastDays(overAllHeatMap, 1);
+  }
+
   Future<List<GitInfoRecord>> scanGitRepos(
     String baseDirectoryPath,
     String committerName,
@@ -89,6 +100,21 @@ class GitInfoRepository {
     if (committerName.isEmpty) {
       throw Exception('Committer name is not set');
     }
+    maxGitMessages = AppConstants.maxGitMessages;
+    Iterable<String> projectDirectoryPaths =
+        await buildHeatMap(baseDirectoryPath, committerName);
+    final records = projectDirectoryPaths
+        .map((path) => _createRecord(projectNameFromPath(path)))
+        .whereType<GitInfoRecord>()
+        .cast<GitInfoRecord>()
+        .toList();
+    records.sort((a, b) => b.latestCommit.compareTo(a.latestCommit));
+    insertOverallRecord(records, calculateOverAllHeatMap(_projectHeatMap));
+    return records;
+  }
+
+  Future<Iterable<String>> buildHeatMap(
+      String baseDirectoryPath, String committerName) async {
     _projectHeatMap.clear();
     currentDirectory = baseDirectoryPath;
     final projectDirectoryPaths = (await _getGitDirectories(baseDirectoryPath))
@@ -103,14 +129,7 @@ class GitInfoRepository {
       final heatMap = heatMapFromLines(filteredLines);
       _projectHeatMap[projectNameFromPath(projectDirectory)] = heatMap;
     }
-    final records = projectDirectoryPaths
-        .map((path) => _createRecord(projectNameFromPath(path)))
-        .whereType<GitInfoRecord>()
-        .cast<GitInfoRecord>()
-        .toList();
-    records.sort((a, b) => b.latestCommit.compareTo(a.latestCommit));
-    insertOverallRecord(records, calculateOverAllHeatMap(_projectHeatMap));
-    return records;
+    return projectDirectoryPaths;
   }
 
   void insertOverallRecord(
@@ -145,13 +164,13 @@ class GitInfoRepository {
     final heatMap = <DateTime, int>{};
     final List<DateTime> dateTimeList =
         lines.map((line) => DateTime.parse(line.substring(0, 10))).toList();
-    dateTimeList.forEach((element) {
+    for (var element in dateTimeList) {
       heatMap.update(
         element,
         (value) => 1 + value,
         ifAbsent: () => 1,
       );
-    });
+    }
     return heatMap;
   }
 

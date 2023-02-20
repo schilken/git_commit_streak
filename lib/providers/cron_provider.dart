@@ -9,7 +9,7 @@ final schedulerStreamProvider = Provider<Stream<int>>((ref) {
   int id = 0;
   final cron = Cron();
   final streamController = StreamController<int>();
-  final taskHandle = cron.schedule(Schedule.parse('*/15 * * * *'), () {
+  final taskHandle = cron.schedule(Schedule.parse('0 18,19 * * *'), () {
     log.i('cron task - ticked $id');
     streamController.add(id++);
   });
