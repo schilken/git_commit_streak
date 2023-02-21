@@ -54,6 +54,26 @@ class NotificationService {
       notificationDetails,
     );
   }
+
+/*
+osascript -e 'tell application "Messages" to send "YOUR MESSAGE HERE" to buddy "RECIPIENT PHONE NUMBER OR EMAIL ADDRESS"
+end tell'
+*/
+
+  Future<int> sendIMessage(String body, String recipient) async {
+    var process = await Process.run(
+      'osascript',
+      [
+        '-e',
+        'tell application "Messages" to send "$body" to buddy "$recipient"'
+      ],
+    );
+    if (process.exitCode != 0) {
+      log.i('sendIMessage failed:');
+    }
+    return process.exitCode;
+  }
+
 }
 
 final notificationServiceProvider = Provider<NotificationService>((ref) {

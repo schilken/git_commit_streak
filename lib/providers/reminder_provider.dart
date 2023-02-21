@@ -31,10 +31,15 @@ class Reminder {
       ref
           .read(notificationServiceProvider)
           .showNotification("Today's commit count: $commitCount");
+      ref.read(notificationServiceProvider).sendIMessage(
+          "Today's commit count: $commitCount", 'alfred@schilken.de');
     } else {
       ref
           .read(notificationServiceProvider)
           .showNotification('Not yet any commits today');
+      ref
+          .read(notificationServiceProvider)
+          .sendIMessage('Not yet any commits today', 'alfred@schilken.de');
     }
   }
 }

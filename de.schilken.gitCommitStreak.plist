@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>de.schilken.gitCommitStreak</string>
+  <key>ProgramArguments</key>
+    <array>
+      <string>open</string>
+      <string>/Users/aschilken/dev/bin/GitCommitStreak.app</string>
+    </array>
+<key>RunAtLoad</key>
+    <true/>
+<key>StartCalendarInterval</key>
+<dict>
+  <key>Hour</key>
+  <integer>18</integer>
+  <key>Minute</key>
+  <integer>33</integer>
+</dict>  
+</dict> 
+</plist>
