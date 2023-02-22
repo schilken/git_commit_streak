@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,6 +10,7 @@ import 'package:mixin_logger/mixin_logger.dart' as log;
 
 import 'pages/main_view.dart';
 import 'providers/providers.dart';
+import 'providers/reminder_provider.dart';
 
 const loggerFolder = '/tmp/git_commit_streak_log';
 
@@ -16,18 +19,29 @@ Future<void> main() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   final pubspec = Pubspec.parse(await rootBundle.loadString('pubspec.yaml'));
   final version = pubspec.version;
-//  debugPrint('version from pubspec.yaml: $version');
   await log.initLogger(loggerFolder);
-  log.i('version from pubspec.yaml: $version');  
+  final isCheckCommitStreak =
+      Platform.environment['CHECK_COMMIT_STREAK'] ?? 'false';
+  log.i(
+      'version from pubspec.yaml: $version, isCheckCommitStreak: $isCheckCommitStreak');
+
   sharedPreferences.setString('appVersion', version.toString());
-  runApp(
-    ProviderScope(
-      overrides: [
-        sharedPreferencesProvider.overrideWithValue(sharedPreferences),
-      ],
-      child: const MainApp(),
-    ),
+  final container = ProviderContainer(
+    overrides: [
+      sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+    ],
+//    observers: [AsyncErrorLogger()],
   );
+  if (isCheckCommitStreak == 'true') {
+    await container.read(reminderProvider).checkCommitsOfToday();
+    await Future<void>.delayed(const Duration(milliseconds: 1000));
+    log.i('before SystemNavigator.pop');
+    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+  }
+  runApp(UncontrolledProviderScope(
+    container: container,
+    child: const MainApp(),
+  ));
 }
 
 class MainApp extends StatelessWidget {

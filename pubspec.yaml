@@ -1,7 +1,7 @@
 name: git_commit_streak
 description: A tool to show how many continous days there are commits
 publish_to: "none"
-version: 0.1.0+1
+version: 0.1.0+2
 
 environment:
   sdk: ">=2.19.0 <3.0.0"

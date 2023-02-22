@@ -21,23 +21,23 @@ class Reminder {
   late GitInfoRepository _gitInfoRepository;
   late PreferencesRepository _preferencesRepository;
 
-  checkCommitsOfToday() async {
+  Future<void> checkCommitsOfToday() async {
     log.i('checkCommitsOfToday');
     final commitCount = await _gitInfoRepository.calcCommitCountOfToday(
       _preferencesRepository.currentDirectory,
       _preferencesRepository.committerName,
     );
     if (commitCount > 0) {
-      ref
+      await ref
           .read(notificationServiceProvider)
           .showNotification("Today's commit count: $commitCount");
-      ref.read(notificationServiceProvider).sendIMessage(
+      await ref.read(notificationServiceProvider).sendIMessage(
           "Today's commit count: $commitCount", 'alfred@schilken.de');
     } else {
-      ref
+      await ref
           .read(notificationServiceProvider)
           .showNotification('Not yet any commits today');
-      ref
+      await ref
           .read(notificationServiceProvider)
           .sendIMessage('Not yet any commits today', 'alfred@schilken.de');
     }
