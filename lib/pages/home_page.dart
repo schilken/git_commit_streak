@@ -1,17 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
-
-import 'package:git_commit_streak/utils/utils.dart';
+import 'package:path/path.dart' as p;
 
 import '../components/async_value_widget.dart';
 import '../components/record_list_view.dart';
 import '../components/result_page_header.dart';
 import '../providers/git_info_notifier.dart';
 import '../providers/providers.dart';
+import '../utils/utils.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -106,6 +108,7 @@ class CommitsToday extends StatelessWidget {
 
 ToolBarPullDownButton createToolBarPullDownButton(
     WidgetRef ref, String currentDirectory) {
+  final userHomeDirectory = Platform.environment['HOME'];  
   return ToolBarPullDownButton(
     label: "Actions",
     icon: CupertinoIcons.ellipsis_circle,
@@ -115,7 +118,9 @@ ToolBarPullDownButton createToolBarPullDownButton(
         title: const Text("Choose Folder"),
         onTap: () async {
           String? selectedDirectory =
-              await FilePicker.platform.getDirectoryPath();
+              await FilePicker.platform.getDirectoryPath(
+            initialDirectory: userHomeDirectory,
+          );
           if (selectedDirectory != null) {
             ref
                 .read(appNotifier.notifier)
