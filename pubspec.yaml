@@ -21,6 +21,7 @@ dependencies:
   intl: ^0.18.0
   macos_ui: ^1.10.0
   mixin_logger: ^0.0.3
+  package_info_plus: ^3.0.3
   pubspec_parse: ^1.2.1
   shared_preferences: ^2.0.17
 

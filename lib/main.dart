@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mixin_logger/mixin_logger.dart' as log;
@@ -38,6 +39,9 @@ Future<void> main() async {
     log.i('before SystemNavigator.pop');
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  log.i(
+      'bundleID: ${packageInfo.packageName} executable: ${Platform.resolvedExecutable}');
   runApp(UncontrolledProviderScope(
     container: container,
     child: const MainApp(),
