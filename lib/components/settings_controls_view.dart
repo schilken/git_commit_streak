@@ -68,10 +68,18 @@ class SettingsControlsView extends ConsumerWidget {
             ],
             gapHeight12,
             SwitchWithLabel(
-              label: 'Notify Git Count',
+              label: 'Notify also the current Commit Count',
               initialValue: settings.isApprovalActive,
               onChanged: ref.read(settingsNotifier.notifier).setApprovalActive,
             ),
+            gapHeight4,
+            Container(
+              padding: EdgeInsets.all(4),
+              color: Colors.grey.shade200,
+              child: Text(
+                  'Also send an iMessage if there are commits today. As a small reward.'),
+            ),
+            gapHeight20,
             PushButton(
               buttonSize: ButtonSize.large,
               isSecondary: true,
