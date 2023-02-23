@@ -57,7 +57,7 @@ class PreferencesRepository {
   }
 
   String get reminderHhMm {
-    return _prefs.getString('reminderHhMm') ?? '1900';
+    return _prefs.getString('reminderHhMm') ?? '19:00';
   }
 
 }

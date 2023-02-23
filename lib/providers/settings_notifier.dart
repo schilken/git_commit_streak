@@ -8,19 +8,35 @@ import 'providers.dart';
 class SettingsState {
   String committerName;
   bool isReminderActive;
+  bool isSendIMessageActive;
+  bool isApprovalActive;
+  String recipientName;
+  String reminderHhMm;
 
   SettingsState({
     required this.committerName,
     required this.isReminderActive,
+    required this.isSendIMessageActive,
+    required this.isApprovalActive,
+    required this.recipientName,
+    required this.reminderHhMm,
   });
 
   SettingsState copyWith({
     String? committerName,
     bool? isReminderActive,
+    bool? isSendIMessageActive,
+    bool? isApprovalActive,
+    String? recipientName,
+    String? reminderHhMm,
   }) {
     return SettingsState(
       committerName: committerName ?? this.committerName,
       isReminderActive: isReminderActive ?? this.isReminderActive,
+      isSendIMessageActive: isSendIMessageActive ?? this.isSendIMessageActive,
+      isApprovalActive: isApprovalActive ?? this.isApprovalActive,
+      recipientName: recipientName ?? this.recipientName,
+      reminderHhMm: reminderHhMm ?? this.reminderHhMm,
     );
   }
 }
@@ -38,6 +54,10 @@ class SettingsNotifier extends Notifier<SettingsState> {
     return SettingsState(
       committerName: _preferencesRepository.committerName,
       isReminderActive: _preferencesRepository.isReminderActive,
+      isSendIMessageActive: _preferencesRepository.isSendIMessageActive,
+      isApprovalActive: _preferencesRepository.isApprovalActive,
+      recipientName: _preferencesRepository.recipientName,
+      reminderHhMm: _preferencesRepository.reminderHhMm,
     );
   }
 
@@ -45,6 +65,18 @@ class SettingsNotifier extends Notifier<SettingsState> {
     debugPrint('setCommitterName |$name|');
     await _preferencesRepository.setCommitterName(name);
     state = state.copyWith(committerName: name);
+  }
+
+  Future<void> setRecipientName(String name) async {
+    debugPrint('setRecipientName |$name|');
+    await _preferencesRepository.setRecipientName(name);
+    state = state.copyWith(recipientName: name);
+  }
+
+  Future<void> setReminderHhMm(String hhMm) async {
+    debugPrint('setReminderHhMm |$hhMm|');
+    await _preferencesRepository.setReminderHhMm(hhMm);
+    state = state.copyWith(reminderHhMm: hhMm);
   }
 
   Future<void> setReminderActive(bool isActive) async {
@@ -58,6 +90,19 @@ class SettingsNotifier extends Notifier<SettingsState> {
       ref.read(notificationServiceProvider).disable();
     }
   }
+
+  Future<void> setSendIMessageActive(bool isActive) async {
+    debugPrint('setSendIMessageActive |$isActive|');
+    await _preferencesRepository.setSendIMessageActive(isActive);
+    state = state.copyWith(isSendIMessageActive: isActive);
+  }
+
+  Future<void> setApprovalActive(bool isActive) async {
+    debugPrint('setApprovalActive |$isActive|');
+    await _preferencesRepository.setApprovalActive(isActive);
+    state = state.copyWith(isApprovalActive: isActive);
+  }
+
 
 }
 
