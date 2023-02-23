@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-import '../components/settings_fields_view.dart';
+import '../components/settings_controls_view.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -28,7 +28,7 @@ class SettingsPage extends StatelessWidget {
             ContentArea(
               builder: (context, _) {
                 return const Center(
-                  child: SettingsFieldsView(),
+                  child: SettingsControlsView(),
                 );
               },
             ),

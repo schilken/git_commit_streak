@@ -32,12 +32,12 @@ class SettingsNotifier extends Notifier<SettingsState> {
   SettingsState build() {
     debugPrint('SettingsNotifier');
     _preferencesRepository = ref.watch(preferencesRepositoryProvider);
-    if (_preferencesRepository.isreminderActive) {
+    if (_preferencesRepository.isReminderActive) {
       ref.read(notificationServiceProvider).init();
     }
     return SettingsState(
       committerName: _preferencesRepository.committerName,
-      isReminderActive: _preferencesRepository.isreminderActive,
+      isReminderActive: _preferencesRepository.isReminderActive,
     );
   }
 

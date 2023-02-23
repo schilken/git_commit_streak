@@ -7,14 +7,14 @@ import 'package:macos_ui/macos_ui.dart';
 import '../providers/notification_service.dart';
 import '../providers/providers.dart';
 
-class SettingsFieldsView extends ConsumerStatefulWidget {
-  const SettingsFieldsView({super.key});
+class SettingsControlsView extends ConsumerStatefulWidget {
+  const SettingsControlsView({super.key});
 
   @override
-  _SettingsFieldsViewState createState() => _SettingsFieldsViewState();
+  _SettingsControlsViewState createState() => _SettingsControlsViewState();
 }
 
-class _SettingsFieldsViewState extends ConsumerState<SettingsFieldsView> {
+class _SettingsControlsViewState extends ConsumerState<SettingsControlsView> {
   final _controller = TextEditingController();
   late FocusNode _focusNode;
 
@@ -27,6 +27,7 @@ class _SettingsFieldsViewState extends ConsumerState<SettingsFieldsView> {
 
   @override
   dispose() {
+    super.dispose();
     _focusNode.dispose();
     _controller.dispose();
   }
@@ -41,7 +42,7 @@ class _SettingsFieldsViewState extends ConsumerState<SettingsFieldsView> {
   Widget build(BuildContext context) {
     final settings = ref.watch(settingsNotifier);
     _controller.text = settings.committerName;
-    debugPrint('SettingsFieldsView build ${_controller.text}');
+    debugPrint('SettingsControlsView build ${_controller.text}');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,16 +88,16 @@ class _SettingsFieldsViewState extends ConsumerState<SettingsFieldsView> {
         ),
         gapHeight8,
         if (settings.isReminderActive)
-        PushButton(
-          buttonSize: ButtonSize.large,
-          isSecondary: true,
-          onPressed: () async {
-            await ref
-                .read(notificationServiceProvider)
-                .showNotification('Test Notification');
-          },
-          child: Text('Test Notification'),
-        ),
+          PushButton(
+            buttonSize: ButtonSize.large,
+            isSecondary: true,
+            onPressed: () async {
+              await ref
+                  .read(notificationServiceProvider)
+                  .showNotification('Test Notification');
+            },
+            child: const Text('Test Notification'),
+          ),
       ],
     );
   }
