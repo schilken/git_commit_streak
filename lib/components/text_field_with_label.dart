@@ -32,6 +32,7 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
 
   @override
   void initState() {
+    _controller.text = widget.initialValue;
     super.initState();
     _focusNode.addListener(() => submitIfValid(_controller.text, context));
   }
@@ -49,6 +50,7 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
         widget.onSubmitted(value);
       } else {
         _controller.text = '';
+        widget.onSubmitted('');
         Future<void>.delayed(
             const Duration(milliseconds: 10),
             () => showMacosAlertDialog(
