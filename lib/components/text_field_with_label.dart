@@ -76,6 +76,8 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
                   ),
                 ));
       }
+    } else {
+      widget.onSubmitted(value);
     }
   }
 

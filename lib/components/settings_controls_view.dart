@@ -80,15 +80,33 @@ class SettingsControlsView extends ConsumerWidget {
                   'Also send an iMessage if there are commits today. As a small reward.'),
             ),
             gapHeight20,
-            PushButton(
-              buttonSize: ButtonSize.large,
-              isSecondary: true,
-              onPressed: () async {
-                await ref
-                    .read(notificationServiceProvider)
-                    .showNotification('Test Notification');
-              },
-              child: const Text('Test Notification'),
+            Row(
+              children: [
+                PushButton(
+                  buttonSize: ButtonSize.small,
+                  isSecondary: true,
+                  color: Colors.grey.shade100,
+                  onPressed: () async {
+                    await ref.read(settingsNotifier.notifier).validate();
+                  },
+                  child: const Text('Validate Settings'),
+                ),
+                gapWidth4,
+                Text(settings.validationMessage),
+                Spacer(),
+                if (settings.validationMessage.length < 4)
+                  PushButton(
+                    buttonSize: ButtonSize.small,
+                    isSecondary: true,
+                    color: Colors.grey.shade100,
+                    onPressed: () async {
+                      await ref
+                          .read(notificationServiceProvider)
+                          .showNotification('Test Notification');
+                    },
+                    child: const Text('Test Notification'),
+                  ),
+              ],
             ),
           ],
         ],

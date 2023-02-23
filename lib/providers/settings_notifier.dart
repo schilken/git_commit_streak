@@ -12,6 +12,7 @@ class SettingsState {
   bool isApprovalActive;
   String recipientName;
   String reminderHhMm;
+  String validationMessage;
 
   SettingsState({
     required this.committerName,
@@ -20,6 +21,7 @@ class SettingsState {
     required this.isApprovalActive,
     required this.recipientName,
     required this.reminderHhMm,
+    required this.validationMessage,
   });
 
   SettingsState copyWith({
@@ -29,6 +31,7 @@ class SettingsState {
     bool? isApprovalActive,
     String? recipientName,
     String? reminderHhMm,
+    String? validationMessage,
   }) {
     return SettingsState(
       committerName: committerName ?? this.committerName,
@@ -37,6 +40,7 @@ class SettingsState {
       isApprovalActive: isApprovalActive ?? this.isApprovalActive,
       recipientName: recipientName ?? this.recipientName,
       reminderHhMm: reminderHhMm ?? this.reminderHhMm,
+      validationMessage: validationMessage ?? this.validationMessage,
     );
   }
 }
@@ -58,6 +62,7 @@ class SettingsNotifier extends Notifier<SettingsState> {
       isApprovalActive: _preferencesRepository.isApprovalActive,
       recipientName: _preferencesRepository.recipientName,
       reminderHhMm: _preferencesRepository.reminderHhMm,
+      validationMessage: '',
     );
   }
 
@@ -65,18 +70,21 @@ class SettingsNotifier extends Notifier<SettingsState> {
     debugPrint('setCommitterName |$name|');
     await _preferencesRepository.setCommitterName(name);
     state = state.copyWith(committerName: name);
+    validate();
   }
 
   Future<void> setRecipientName(String name) async {
     debugPrint('setRecipientName |$name|');
     await _preferencesRepository.setRecipientName(name);
     state = state.copyWith(recipientName: name);
+    validate();
   }
 
   Future<void> setReminderHhMm(String hhMm) async {
     debugPrint('setReminderHhMm |$hhMm|');
     await _preferencesRepository.setReminderHhMm(hhMm);
     state = state.copyWith(reminderHhMm: hhMm);
+    validate();
   }
 
   Future<void> setReminderActive(bool isActive) async {
@@ -89,18 +97,33 @@ class SettingsNotifier extends Notifier<SettingsState> {
     } else {
       ref.read(notificationServiceProvider).disable();
     }
+    validate();
   }
 
   Future<void> setSendIMessageActive(bool isActive) async {
     debugPrint('setSendIMessageActive |$isActive|');
     await _preferencesRepository.setSendIMessageActive(isActive);
     state = state.copyWith(isSendIMessageActive: isActive);
+    validate();
   }
 
   Future<void> setApprovalActive(bool isActive) async {
     debugPrint('setApprovalActive |$isActive|');
     await _preferencesRepository.setApprovalActive(isActive);
     state = state.copyWith(isApprovalActive: isActive);
+    validate();
+  }
+
+  validate() {
+    if (state.reminderHhMm.length != 5) {
+      state = state.copyWith(validationMessage: 'time is not set');
+    } else if (state.isSendIMessageActive && state.recipientName.isEmpty) {
+      state = state.copyWith(validationMessage: 'recipientName must be set');
+    } else if (state.committerName.isEmpty) {
+      state = state.copyWith(validationMessage: 'committerName must be set');
+    } else {
+      state = state.copyWith(validationMessage: '✅');
+    }
   }
 
 
