@@ -47,6 +47,7 @@ class SettingsControlsView extends ConsumerWidget {
               initialValue: settings.reminderHhMm,
               onSubmitted: (value) =>
                   ref.read(settingsNotifier.notifier).setReminderHhMm(value),
+              regexValidator: '^[012][0-9]:[0-5][0-9]\$',
             ),
             gapHeight8,
             SwitchWithLabel(
