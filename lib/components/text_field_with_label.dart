@@ -28,15 +28,19 @@ class TextFieldWithLabel extends HookWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label),
+        Text(label, style: const TextStyle(color: Colors.blueGrey)),
         gapHeight8,
-        MacosTextField(
-          controller: controller,
-          focusNode: focusNode,
-          placeholder: placeholder,
-          clearButtonMode: OverlayVisibilityMode.editing,
-          maxLines: 1,
-          onSubmitted: onSubmitted,
+        SizedBox(
+          width: 200,
+          child: MacosTextField(
+            controller: controller,
+            focusNode: focusNode,
+            decoration: const BoxDecoration(),
+            placeholder: placeholder,
+            clearButtonMode: OverlayVisibilityMode.editing,
+            maxLines: 1,
+            onSubmitted: onSubmitted,
+          ),
         ),
       ],
     );

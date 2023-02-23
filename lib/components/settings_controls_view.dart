@@ -8,6 +8,7 @@ import 'package:git_commit_streak/utils/utils.dart';
 
 import '../providers/notification_service.dart';
 import '../providers/providers.dart';
+import 'switch_with_label.dart';
 import 'text_field_with_label.dart';
 
 class SettingsControlsView extends ConsumerWidget {
@@ -33,18 +34,10 @@ class SettingsControlsView extends ConsumerWidget {
                 ref.read(settingsNotifier.notifier).setCommitterName(value),
           ),
           gapHeight20,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Activate Reminders'),
-              const Spacer(),
-              MacosSwitch(
-                value: settings.isReminderActive,
-                onChanged: (value) {
-                  ref.read(settingsNotifier.notifier).setReminderActive(value);
-                },
-              ),
-            ],
+          SwitchWithLabel(
+            label: 'Activate Reminders',
+            initialValue: settings.isReminderActive,
+            onChanged: ref.read(settingsNotifier.notifier).setReminderActive,
           ),
           gapHeight20,
           if (settings.isReminderActive) ...[
@@ -56,20 +49,11 @@ class SettingsControlsView extends ConsumerWidget {
                   ref.read(settingsNotifier.notifier).setReminderHhMm(value),
             ),
             gapHeight8,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Activate iMessage reminder'),
-                const Spacer(),
-                MacosSwitch(
-                  value: settings.isSendIMessageActive,
-                  onChanged: (value) {
-                    ref
-                        .read(settingsNotifier.notifier)
-                        .setSendIMessageActive(value);
-                  },
-                ),
-              ],
+            SwitchWithLabel(
+              label: 'Activate iMessage reminder',
+              initialValue: settings.isSendIMessageActive,
+              onChanged:
+                  ref.read(settingsNotifier.notifier).setSendIMessageActive,
             ),
             if (settings.isSendIMessageActive) ...[
               gapHeight12,
@@ -82,20 +66,10 @@ class SettingsControlsView extends ConsumerWidget {
               ),
             ],
             gapHeight12,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Notify Git Count'),
-                const Spacer(),
-                MacosSwitch(
-                  value: settings.isApprovalActive,
-                  onChanged: (value) {
-                    ref
-                        .read(settingsNotifier.notifier)
-                        .setApprovalActive(value);
-                  },
-                ),
-              ],
+            SwitchWithLabel(
+              label: 'Notify Git Count',
+              initialValue: settings.isApprovalActive,
+              onChanged: ref.read(settingsNotifier.notifier).setApprovalActive,
             ),
             PushButton(
               buttonSize: ButtonSize.large,
