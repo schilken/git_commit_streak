@@ -1,12 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/cupertino.dart' hide OverlayVisibilityMode;
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import 'package:git_commit_streak/utils/utils.dart';
 
-import '../providers/notification_service.dart';
 import '../providers/providers.dart';
 import 'switch_with_label.dart';
 import 'text_field_with_label.dart';
@@ -74,9 +72,9 @@ class SettingsControlsView extends ConsumerWidget {
             ),
             gapHeight4,
             Container(
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               color: Colors.grey.shade200,
-              child: Text(
+              child: const Text(
                   'Also send an iMessage if there are commits today. As a small reward.'),
             ),
             gapHeight20,
@@ -95,7 +93,7 @@ class SettingsControlsView extends ConsumerWidget {
                 ),
                 gapWidth4,
                 Text(settings.validationMessage),
-                Spacer(),
+                const Spacer(),
                 if (settings.validationMessage.length < 4)
                   PushButton(
                     buttonSize: ButtonSize.small,

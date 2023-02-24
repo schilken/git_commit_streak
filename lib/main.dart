@@ -11,7 +11,6 @@ import 'package:mixin_logger/mixin_logger.dart' as log;
 
 import 'pages/main_view.dart';
 import 'providers/providers.dart';
-import 'providers/reminder_provider.dart';
 
 const loggerFolder = '/tmp/git_commit_streak_log';
 
