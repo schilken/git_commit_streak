@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print
 import 'package:flutter/foundation.dart';
+import 'package:git_commit_streak/utils/filesystem_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'providers.dart';
@@ -54,10 +55,12 @@ class AppNotifier extends Notifier<AppState> {
     );
   }
 
-  void setCurrentDirectory({required String directoryPath}) {
-    _preferencesRepository.setCurrentDirectory(directoryPath);
-    state = state.copyWith(currentDirectory: directoryPath);
-    debugPrint('setDefaultDirectory: $directoryPath');
+  void setCurrentDirectory({required String fullDirectoryPath}) {
+    final reducedPath =
+        FilesystemUtils().startWithUsersFolder(fullDirectoryPath);
+    _preferencesRepository.setCurrentDirectory(reducedPath);
+    state = state.copyWith(currentDirectory: reducedPath);
+    debugPrint('setDefaultDirectory: $reducedPath');
   }
 
 }

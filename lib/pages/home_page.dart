@@ -6,12 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
-import 'package:path/path.dart' as p;
 
 import '../components/async_value_widget.dart';
 import '../components/record_list_view.dart';
 import '../components/result_page_header.dart';
-import '../providers/git_info_notifier.dart';
 import '../providers/providers.dart';
 import '../utils/utils.dart';
 
@@ -124,7 +122,7 @@ ToolBarPullDownButton createToolBarPullDownButton(
           if (selectedDirectory != null) {
             ref
                 .read(appNotifier.notifier)
-                .setCurrentDirectory(directoryPath: selectedDirectory);
+                .setCurrentDirectory(fullDirectoryPath: selectedDirectory);
             ref.read(gitInfoNotifier.notifier).scan(selectedDirectory);
           }
         },
