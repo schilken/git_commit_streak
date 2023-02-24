@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:path/path.dart' as p;
 
 import '../data/git_info_record.dart';
 import 'git_info_repository.dart';
@@ -54,7 +51,6 @@ final totalRecordCountProvider = Provider<int>((ref) {
       },
       orElse: () => 0);
 });
-
 
 final todayCommitCountAsyncProvider = Provider<AsyncValue<int>>((ref) {
   final gitInfoAsyncValue = ref.watch(gitInfoNotifier);

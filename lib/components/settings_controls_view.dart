@@ -87,7 +87,9 @@ class SettingsControlsView extends ConsumerWidget {
                   isSecondary: true,
                   color: Colors.grey.shade100,
                   onPressed: () async {
-                    await ref.read(settingsNotifier.notifier).validate();
+                    await ref
+                        .read(settingsNotifier.notifier)
+                        .scheduleIfValidAndActive();
                   },
                   child: const Text('Validate Settings'),
                 ),

@@ -2,15 +2,12 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mixin_logger/mixin_logger.dart' as log;
 
-import 'cron_provider.dart';
-import 'git_info_repository.dart';
-import 'notification_service.dart';
-import 'preferences_repository.dart';
+import 'providers.dart';
 
 class Reminder {
   Reminder(
     this.ref,
-  ) : _reminderTicker = ref.watch(schedulerStreamProvider) {
+  ) : _reminderTicker = ref.watch(cronServiceProvider).stream {
     log.i('Reminder.constructor');
     _reminderTicker.listen((data) => checkCommitsOfToday());
     _gitInfoRepository = ref.read(gitInfoRepositoryProvider);

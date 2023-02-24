@@ -2,7 +2,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'notification_service.dart';
 import 'providers.dart';
 
 class SettingsState {
@@ -54,6 +53,10 @@ class SettingsNotifier extends Notifier<SettingsState> {
     _preferencesRepository = ref.watch(preferencesRepositoryProvider);
     if (_preferencesRepository.isReminderActive) {
       ref.read(notificationServiceProvider).init();
+      Future<void>.delayed(
+        const Duration(milliseconds: 100),
+        () => scheduleIfValidAndActive(),
+      );
     }
     return SettingsState(
       committerName: _preferencesRepository.committerName,
@@ -70,21 +73,21 @@ class SettingsNotifier extends Notifier<SettingsState> {
     debugPrint('setCommitterName |$name|');
     await _preferencesRepository.setCommitterName(name);
     state = state.copyWith(committerName: name);
-    validate();
+    scheduleIfValidAndActive();
   }
 
   Future<void> setRecipientName(String name) async {
     debugPrint('setRecipientName |$name|');
     await _preferencesRepository.setRecipientName(name);
     state = state.copyWith(recipientName: name);
-    validate();
+    scheduleIfValidAndActive();
   }
 
   Future<void> setReminderHhMm(String hhMm) async {
     debugPrint('setReminderHhMm |$hhMm|');
     await _preferencesRepository.setReminderHhMm(hhMm);
     state = state.copyWith(reminderHhMm: hhMm);
-    validate();
+    scheduleIfValidAndActive();
   }
 
   Future<void> setReminderActive(bool isActive) async {
@@ -97,24 +100,24 @@ class SettingsNotifier extends Notifier<SettingsState> {
     } else {
       ref.read(notificationServiceProvider).disable();
     }
-    validate();
+    scheduleIfValidAndActive();
   }
 
   Future<void> setSendIMessageActive(bool isActive) async {
     debugPrint('setSendIMessageActive |$isActive|');
     await _preferencesRepository.setSendIMessageActive(isActive);
     state = state.copyWith(isSendIMessageActive: isActive);
-    validate();
+    scheduleIfValidAndActive();
   }
 
   Future<void> setApprovalActive(bool isActive) async {
     debugPrint('setApprovalActive |$isActive|');
     await _preferencesRepository.setApprovalActive(isActive);
     state = state.copyWith(isApprovalActive: isActive);
-    validate();
+    scheduleIfValidAndActive();
   }
 
-  validate() {
+  scheduleIfValidAndActive() {
     if (state.reminderHhMm.length != 5) {
       state = state.copyWith(validationMessage: 'time is not set');
     } else if (state.isSendIMessageActive && state.recipientName.isEmpty) {
@@ -123,6 +126,11 @@ class SettingsNotifier extends Notifier<SettingsState> {
       state = state.copyWith(validationMessage: 'committerName must be set');
     } else {
       state = state.copyWith(validationMessage: '✅');
+      if (state.isReminderActive) {
+        ref.watch(cronServiceProvider).schedule(state.reminderHhMm);
+      } else {
+        ref.watch(cronServiceProvider).cancel();
+      }
     }
   }
 
