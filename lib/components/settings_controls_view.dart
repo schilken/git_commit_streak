@@ -103,6 +103,12 @@ class SettingsControlsView extends ConsumerWidget {
                       await ref
                           .read(notificationServiceProvider)
                           .showNotification('Test Notification');
+                      if (settings.isSendIMessageActive) {
+                        await ref
+                            .read(notificationServiceProvider)
+                            .sendIMessage(
+                                'Test Notification', settings.recipientName);
+                      }
                     },
                     child: const Text('Test Notification'),
                   ),
