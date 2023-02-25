@@ -24,19 +24,23 @@ class Reminder {
       _preferencesRepository.currentDirectory,
       _preferencesRepository.committerName,
     );
-    if (commitCount > 0) {
-      await ref
-          .read(notificationServiceProvider)
-          .showNotification("Today's commit count: $commitCount");
-      await ref.read(notificationServiceProvider).sendIMessage(
-          "Today's commit count: $commitCount", 'alfred@schilken.de');
-    } else {
+    if (commitCount == 0) {
       await ref
           .read(notificationServiceProvider)
           .showNotification('Not yet any commits today');
+      if (_preferencesRepository.isSendIMessageActive) {
+        await ref
+            .read(notificationServiceProvider)
+            .sendIMessage('Not yet any commits today', 'alfred@schilken.de');
+      }
+    } else if (_preferencesRepository.isApprovalActive) {
       await ref
           .read(notificationServiceProvider)
-          .sendIMessage('Not yet any commits today', 'alfred@schilken.de');
+          .showNotification("Today's commit count: $commitCount");
+      if (_preferencesRepository.isSendIMessageActive) {
+        await ref.read(notificationServiceProvider).sendIMessage(
+            "Today's commit count: $commitCount", 'alfred@schilken.de');
+      }
     }
   }
 }
