@@ -47,5 +47,21 @@ For example:
 </dict>
 ```
 
+## Disable the standby mode
+The cron package can only schedule the commit checks at the specified time, when the Mac is **not** powered off and the app is running in der background. 
+
+By default, a new Mac is–at least in Europe–configured to power down after some delay being in sleep mode (`standy 1`). I use this app to remind me at 19:00, when I haven't committed anything yet. And that shall work also when the MacBook is closed. With the `pmset -c` command, I switch off the auto-power-off only when the Mac is connected to the power grid. Use `man pmset`to look up other options, for example `-a`.
+
+``` 
+$ sudo pmset -c standby 0
+<enter root password>
+
+$ pmset -g
+System-wide power settings:
+Currently in use:
+ standby              0
+...
+```
+
 ## Credits
 Several ideas are taken from https://github.com/bizz84/complete-flutter-course, a great source for learning advanced Flutter created by Andrea Bizzotto (bizz84). Also, thanks to Reuben Turner (GroovinChip) for his great package at https://github.com/GroovinChip/macos_ui
