@@ -24,8 +24,11 @@ A tool that shows the number of consecutive days with at least one commit per da
 The app can only check the commits at the specified time, when the Mac is **not** powered off and the app is running. 
 By default, a new Mac is–at least in Europe–configured to power down after some delay being in sleep mode (**standby 1**).
 
-I use this app to remind me at 19:00, when I haven't committed anything yet. And that shall work also when the MacBook is closed. With the **pmset -c** command, I disable the auto-power-off only when the Mac is connected to the power grid. 
-Use **man pmset** to look up other options, for example **-a**.
+I use this app to remind me at 19:00, when I haven't committed anything yet. 
+And that shall work also when the MacBook is closed. 
+With the **pmset -c** command, I disable the auto-power-off only when the Mac is connected to the power grid.
+So I won't get reminders wenn the MacBook runs on battery. 
+Use **man pmset** in the terminal or Google to look up other options, for example **-a**.
 
 ``` 
 \$ sudo pmset -c standby 0
