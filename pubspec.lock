@@ -252,10 +252,10 @@ packages:
     dependency: "direct main"
     description:
       name: macos_ui
-      sha256: "5c991674895b939e107feeb8efc82f85891af2d1413a3af94f564c64d3034c41"
+      sha256: "1a31c0362499e1aff46d48702f2e6a19596ccf35601fb72ca51441fc278e4a7a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.10.0"
+    version: "1.11.1"
   markdown:
     dependency: transitive
     description:

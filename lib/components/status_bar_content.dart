@@ -7,8 +7,8 @@ import 'package:macos_ui/macos_ui.dart';
 import '../providers/app_notifier.dart';
 import '../providers/git_info_notifier.dart';
 
-class ResultPageHeader extends StatelessWidget {
-  const ResultPageHeader({
+class StatusBarContent extends StatelessWidget {
+  const StatusBarContent({
     super.key,
     required this.ref,
   });
@@ -20,8 +20,8 @@ class ResultPageHeader extends StatelessWidget {
     final appState = ref.watch(appNotifier);
     final selectedRecordCount = ref.watch(totalRecordCountProvider);
     return Container(
-      color: Colors.blueGrey[100],
-      padding: const EdgeInsets.fromLTRB(12, 20, 20, 20),
+      color: Colors.blueGrey[50],
+      padding: const EdgeInsets.fromLTRB(12, 8, 20, 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
