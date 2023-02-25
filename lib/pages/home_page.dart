@@ -23,6 +23,7 @@ class HomePage extends ConsumerWidget {
     return Builder(
       builder: (context) {
         return MacosScaffold(
+          backgroundColor: Colors.white,
           toolBar: ToolBar(
             leading: MacosIconButton(
               icon: const MacosIcon(
