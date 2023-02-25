@@ -43,25 +43,6 @@ I generated a starter project using mason. If you want to create a similar tool 
 - Search for macosui_tool_starter
 - Follow the steps on the Usage page
 
-## Don't forget to extend the entitlements on macOS
-Often the tools require access to the file system or provide an HTTP server. 
-So in such a case, update the plist dictionary in the files DebugProfile.entitlements and Release.entitlements in the macos/Runner directory.
-For example: 
-```
-<dict>
-	<key>com.apple.security.app-sandbox</key>
-	<false/>
-	<key>com.apple.security.cs.allow-jit</key>
-	<true/>
-	<key>com.apple.security.files.downloads.read-write</key>
-	<true/>
-	<key>com.apple.security.files.user-selected.read-write</key>
-	<true/>
-	<key>com.apple.security.network.server</key>
-	<true/>
-</dict>
-```
-
 ## Disable the standby mode
 The cron package can only schedule the commit checks at the specified time, when the Mac is **not** powered off and the app is running in der background. 
 
