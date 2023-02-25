@@ -43,6 +43,18 @@ class HomePage extends ConsumerWidget {
                 const Text('–'),
                 gapWidth12,
                 CommitsToday(ref: ref),
+                gapWidth12,
+                MacosIconButton(
+                  backgroundColor: Colors.transparent,
+                  icon: const MacosIcon(
+//                        size: 32,
+                    CupertinoIcons.refresh,
+                  ),
+                  shape: BoxShape.circle,
+                  onPressed: () => ref
+                      .read(gitInfoNotifier.notifier)
+                      .scan(appState.currentDirectory),
+                ),
               ],
             ),
             actions: [
