@@ -20,6 +20,12 @@ class MainView extends ConsumerStatefulWidget {
 class _MainViewState extends ConsumerState<MainView> {
   int _pageIndex = 0;
   late Reminder reminder;
+  final appLegalese = '© ${DateTime.now().year} Alfred Schilken';
+  final apppIcon = Image.asset(
+    'assets/images/icon_32x32@2x.png',
+    width: 64.0,
+    height: 64.0,
+  );
 
   @override
   void initState() {
@@ -41,9 +47,14 @@ class _MainViewState extends ConsumerState<MainView> {
         ),
         minWidth: 200,
         bottom: MacosListTile(
-          leading: const MacosIcon(CupertinoIcons.app_badge),
+          leading: const MacosIcon(CupertinoIcons.info_circle),
           title: const Text('GitCommitStreak'),
           subtitle: Text('Version ${appState.appVersion}'),
+          onClick: () => showLicensePage(
+            context: context,
+            applicationLegalese: appLegalese,
+            applicationIcon: apppIcon,
+          ),
         ),
         builder: (context, scrollController) => SidebarItems(
           currentIndex: _pageIndex,
