@@ -18,7 +18,7 @@ class StatusBarContent extends StatelessWidget {
     final selectedRecordCount = ref.watch(totalRecordCountProvider);
     return Container(
       color: Colors.blueGrey[50],
-      padding: const EdgeInsets.fromLTRB(12, 8, 20, 12),
+      padding: const EdgeInsets.fromLTRB(12, 16, 20, 18),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

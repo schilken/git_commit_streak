@@ -4,7 +4,7 @@ A tool that shows how many days there are uninterrupted commits
 
 This is a second tool made from a starter project created by mason using macosui_tool_starter.
 
-It scans all git repositories below the selected directory and reads the git log to collect all commits done in last 240 days. From this data a "heatmap" and the commit streak is created. The heatmap is a color coded calendar. The darker the green color the more changes were committed on that day. The streak is the number of sonsecutive days with at least one commit per day.
+It scans all git repositories below the selected directory and reads the git log to collect all commits done in last 240 days. From this data a "heatmap" and the commit streak is created. The heatmap is a color coded calendar. The darker the green color the more changes were committed on that day. The streak is the number of consecutive days with at least one commit per day.
 
 ## Getting Started
 
@@ -18,6 +18,21 @@ flutter build macos
 You find the built app here: `git_commit_streak/build/macos/Build/Products/Release/GitCommitStreak`
 
 <img src="assets_for_readme/GitCommitStreak-Screenshot.png"/>
+
+In the settings, you can activate reminders at a specified time, as notifications, and as iMessage.
+For example, I get a notification and an iMessage at 19h if I have not yet committed anything.
+
+On a MacBook:
+
+<img src="assets_for_readme/GitCommitStreak-Notification.png" width="300" />
+
+On the iPhone:
+
+<img src="assets_for_readme/GitCommitStreak-iPhone_640.jpg"  width="300" />
+
+On a Apple Watch:
+
+<img src="assets_for_readme/GitCommitStreak-Apple_Watch.jpg"  width="200" />
 
 ## Download a release from GitHub
 Currrently there is only a release build for [macOS] (https://github.com/schilken/git_commit_streak/releases/)
