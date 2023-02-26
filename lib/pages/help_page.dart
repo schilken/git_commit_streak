@@ -15,7 +15,7 @@ A tool that shows the number of consecutive days with at least one commit per da
 - Configure in the settings, whether you want to get a reminder each day.
   - Enter the time you want to get a notification on your Mac.
   - If you can receive iMessages, you can **Activate iMessage Reminder**.
-  - You will get the reminder __*Not yet any commits today*__ if no commits a found for today. 
+  - You will get the reminder __*Not yet any commits today*__ if no commits are found for today. 
   - If you also want to get the commit count, activate the last switch on the settings page. 
   Then you will get a notification like __*Today's commit count: 3*__.
   - You can test the configuration with the button **Test Notification**
@@ -24,10 +24,10 @@ A tool that shows the number of consecutive days with at least one commit per da
 The app can only check the commits at the specified time, when the Mac is **not** powered off and the app is running. 
 By default, a new Mac is–at least in Europe–configured to power down after some delay being in sleep mode (**standby 1**).
 
-I use this app to remind me at 19:00, when I haven't committed anything yet. 
+For example: I use this app to remind me at 19:00, when I haven't committed anything yet. 
 And that shall work also when the MacBook is closed. 
-With the **pmset -c** command, I disable the auto-power-off only when the Mac is connected to the power grid.
-So I won't get reminders wenn the MacBook runs on battery. 
+With the **pmset -c** command, I disable the auto-power-off. The parameter **-c** means, deactivate it only when the Mac is connected to the power grid.
+So I won't get reminders when the MacBook runs on battery, and don't drain the battery more than necessary.
 Use **man pmset** in the terminal or Google to look up other options, for example **-a**.
 
 ``` 
