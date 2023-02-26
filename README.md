@@ -37,11 +37,6 @@ On a Apple Watch:
 ## Download a release from GitHub
 Currrently there is only a release build for [macOS] (https://github.com/schilken/git_commit_streak/releases/)
 
-## Making of this app or similar tools
-I generated a starter project using mason. If you want to create a similar tool you can generate a starter project like so:
-- Open https://brickhub.dev
-- Search for macosui_tool_starter
-- Follow the steps on the Usage page
 
 ## Disable the standby mode
 The cron package can only schedule the commit checks at the specified time, when the Mac is **not** powered off and the app is running in der background. 
@@ -58,6 +53,12 @@ Currently in use:
  standby              0
 ...
 ```
+
+## Making of this app or similar tools
+I generated a starter project using mason. If you want to create a similar tool you can generate a starter project like so:
+- Open https://brickhub.dev
+- Search for macosui_tool_starter
+- Follow the steps on the Usage page
 
 ## Credits
 Several ideas are taken from https://github.com/bizz84/complete-flutter-course, a great source for learning advanced Flutter created by Andrea Bizzotto (bizz84). Also, thanks to Reuben Turner (GroovinChip) for his great package at https://github.com/GroovinChip/macos_ui

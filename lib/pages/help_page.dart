@@ -10,6 +10,7 @@ A tool that shows the number of consecutive days with at least one commit per da
 
 ## How To Use
 
+- **First:** In the settings enter your name as it is used by git. The git logs are filtered by this name.
 - Click **Choose Folder** in the dropdown menu in the toolbar. 
 - In the file selector find the directory to scan for all contained git repositories.
 - Configure in the settings, whether you want to get a reminder each day.
