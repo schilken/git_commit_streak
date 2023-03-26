@@ -56,17 +56,17 @@ class StatisticsView extends ConsumerWidget {
           gapHeight16,
           LabelAndValue(
             'Commits in the last 30 days',
-            '${notifier.countDaysWithCommit(days: 30)}',
+            '${notifier.countDaysWithCommit(days: 30).value} → ${notifier.countDaysWithCommit(days: 30).inPercent}%',
           ),
           gapHeight16,
           LabelAndValue(
             'Commits in the last 180 days',
-            '${notifier.countDaysWithCommit(days: 180)}',
+            '${notifier.countDaysWithCommit(days: 180).value} → ${notifier.countDaysWithCommit(days: 180).inPercent}%',
           ),
           gapHeight16,
           LabelAndValue(
             'Commits in the last 360 days',
-            '${notifier.countDaysWithCommit(days: 360)}',
+            '${notifier.countDaysWithCommit(days: 360).value} → ${notifier.countDaysWithCommit(days: 360).inPercent}%',
           ),
           gapHeight16,
           LabelAndValue('Longest Streak', '${notifier.longestStreak()}'),

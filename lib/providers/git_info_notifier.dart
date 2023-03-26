@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -7,6 +8,16 @@ import 'git_info_repository.dart';
 import 'preferences_repository.dart';
 
 typedef AsyncResult = AsyncValue<List<GitInfoRecord>?>;
+
+class ValueWithPercentage {
+  final double value;
+  final double referenceValue;
+  ValueWithPercentage({
+    required this.value,
+    required this.referenceValue,
+  });
+  int get inPercent => (value / referenceValue * 100).toInt();
+}
 
 class GitInfoNotifier extends AsyncNotifier<List<GitInfoRecord>?> {
   GitInfoNotifier();
@@ -36,8 +47,11 @@ class GitInfoNotifier extends AsyncNotifier<List<GitInfoRecord>?> {
 
   bool get isLoading => state.isLoading;
 
-  int countDaysWithCommit({required int days}) {
-    return _gitInfoRepository.countDaysWithCommit(days: days);
+  ValueWithPercentage countDaysWithCommit({required int days}) {
+    return ValueWithPercentage(
+      value: _gitInfoRepository.countDaysWithCommit(days: days).toDouble(),
+      referenceValue: days.toDouble(),
+    );
   }
 
   int longestStreak() {
