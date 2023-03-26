@@ -72,14 +72,17 @@ class HomePage extends ConsumerWidget {
                           data: (records) {
                             if (records == null) {
                               return const Center(
-                                  child: Text('Not yet scanned'));
+                              child: Text('Not yet scanned'),
+                            );
                             }
                             if (records.isEmpty) {
                               return const Center(
-                                  child: Text('No directories found'));
+                              child: Text('No directories found'),
+                            );
                             }
                             return RecordListView(records, ref);
-                          }),
+                        },
+                      ),
                     ),
                     ResizablePane(
                       minSize: 50,
@@ -129,17 +132,19 @@ class CommitsToday extends StatelessWidget {
 }
 
 ToolBarPullDownButton createToolBarPullDownButton(
-    WidgetRef ref, String currentDirectory) {
+  WidgetRef ref,
+  String currentDirectory,
+) {
   final userHomeDirectory = Platform.environment['HOME'];
   return ToolBarPullDownButton(
-    label: "Actions",
+    label: 'Actions',
     icon: CupertinoIcons.ellipsis_circle,
-    tooltipMessage: "Perform tasks with the selected items",
+    tooltipMessage: 'Perform tasks with the selected items',
     items: [
       MacosPulldownMenuItem(
-        title: const Text("Choose Folder"),
+        title: const Text('Choose Folder'),
         onTap: () async {
-          String? selectedDirectory =
+          final selectedDirectory =
               await FilePicker.platform.getDirectoryPath(
             initialDirectory: userHomeDirectory,
           );
@@ -152,7 +157,7 @@ ToolBarPullDownButton createToolBarPullDownButton(
         },
       ),
       MacosPulldownMenuItem(
-        title: const Text("Scan Directory"),
+        title: const Text('Scan Directory'),
         onTap: () {
           ref.read(gitInfoNotifier.notifier).scan(currentDirectory);
         },

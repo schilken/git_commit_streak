@@ -36,7 +36,7 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
     _focusNode.addListener(() => submitIfValid(_controller.text, context));
   }
 
-  submitIfValid(
+  void submitIfValid(
     String value,
     BuildContext context,
   ) {
@@ -73,7 +73,8 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
                       child: const Text('OK'),
                     ),
                   ),
-                ));
+          ),
+        );
       }
     } else {
       widget.onSubmitted(value);
@@ -99,7 +100,6 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
             placeholder: widget.placeholder,
 //            placeholderStyle: TextStyle(color: Colors.red),
             clearButtonMode: OverlayVisibilityMode.editing,
-            maxLines: 1,
             onSubmitted: widget.onSubmitted,
           ),
         ),

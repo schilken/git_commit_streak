@@ -39,7 +39,9 @@ class Reminder {
           .showNotification("Today's commit count: $commitCount");
       if (_preferencesRepository.isSendIMessageActive) {
         await ref.read(notificationServiceProvider).sendIMessage(
-            "Today's commit count: $commitCount", 'alfred@schilken.de');
+              "Today's commit count: $commitCount",
+              'alfred@schilken.de',
+            );
       }
     }
   }

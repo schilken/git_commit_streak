@@ -3,7 +3,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-const _helpMarkdown = '''
+const _helpMarkdown = r'''
 # Git Commit Streak
 
 A tool that shows the number of consecutive days with at least one commit per day 
@@ -32,10 +32,10 @@ So I won't get reminders when the MacBook runs on battery, and don't drain the b
 Use **man pmset** in the terminal or Google to look up other options, for example **-a**.
 
 ``` 
-\$ sudo pmset -c standby 0
+$ sudo pmset -c standby 0
 <enter root password>
 
-\$ pmset -g
+$ pmset -g
 System-wide power settings:
 Currently in use:
  standby              0

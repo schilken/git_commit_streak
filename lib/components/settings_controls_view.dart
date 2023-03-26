@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-import 'package:git_commit_streak/utils/utils.dart';
-
 import '../providers/providers.dart';
+import '../utils/utils.dart';
 import 'switch_with_label.dart';
 import 'text_field_with_label.dart';
 
@@ -18,14 +17,13 @@ class SettingsControlsView extends ConsumerWidget {
     return SizedBox(
       width: 350,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
             height: 60,
           ),
           TextFieldWithLabel(
-            label: 'Committer\'s Name to filter all Commits',
+            label: "Committer's Name to filter all Commits",
             placeholder: 'Enter Committer',
             initialValue: settings.committerName,
             onSubmitted: (value) =>
@@ -45,7 +43,7 @@ class SettingsControlsView extends ConsumerWidget {
               initialValue: settings.reminderHhMm,
               onSubmitted: (value) =>
                   ref.read(settingsNotifier.notifier).setReminderHhMm(value),
-              regexValidator: '^[012][0-9]:[0-5][0-9]\$',
+              regexValidator: r'^[012][0-9]:[0-5][0-9]$',
             ),
             gapHeight8,
             SwitchWithLabel(
@@ -75,7 +73,8 @@ class SettingsControlsView extends ConsumerWidget {
               padding: const EdgeInsets.all(4),
               color: Colors.grey.shade200,
               child: const Text(
-                  'Also send an iMessage if there are commits today. As a small reward.'),
+                'Also send an iMessage if there are commits today. As a small reward.',
+              ),
             ),
             gapHeight20,
             Row(
@@ -85,7 +84,7 @@ class SettingsControlsView extends ConsumerWidget {
                   isSecondary: true,
                   color: Colors.grey.shade100,
                   onPressed: () async {
-                    await ref
+                    ref
                         .read(settingsNotifier.notifier)
                         .scheduleIfValidAndActive();
                   },
@@ -107,7 +106,9 @@ class SettingsControlsView extends ConsumerWidget {
                         await ref
                             .read(notificationServiceProvider)
                             .sendIMessage(
-                                'Test Notification', settings.recipientName);
+                              'Test Notification',
+                              settings.recipientName,
+                            );
                       }
                     },
                     child: const Text('Test Notification'),

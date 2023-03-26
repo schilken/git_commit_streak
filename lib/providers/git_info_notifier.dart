@@ -49,7 +49,8 @@ final totalRecordCountProvider = Provider<int>((ref) {
         final records = data.value ?? [];
         return records.length;
       },
-      orElse: () => 0);
+    orElse: () => 0,
+  );
 });
 
 final todayCommitCountAsyncProvider = Provider<AsyncValue<int>>((ref) {
@@ -60,5 +61,6 @@ final todayCommitCountAsyncProvider = Provider<AsyncValue<int>>((ref) {
     return AsyncValue.data(records[0].commitCountToday);
   }, orElse: () {
     return const AsyncValue.loading();
-  });
+    },
+  );
 });

@@ -1,6 +1,7 @@
 import 'dart:io';
-import 'package:path/path.dart' as p;
+
 import 'package:mixin_logger/mixin_logger.dart' as log;
+import 'package:path/path.dart' as p;
 
 class FilesystemUtils {
   Future<String?> readFile(String filePath) async {

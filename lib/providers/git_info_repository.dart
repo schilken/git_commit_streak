@@ -42,7 +42,7 @@ class GitInfoRepository {
       '-n $maxGitMessages',
       '--pretty=%ci|%cn| %s',
     ];
-    return await systemCommand.runShellCommand(
+    return systemCommand.runShellCommand(
       'git',
       parameters,
       directoryPath,
@@ -72,7 +72,7 @@ class GitInfoRepository {
   }
 
   int _commitCountLastDays(HeatMap heatMap, int days) {
-    int totalCount = 0;
+    var totalCount = 0;
     heatMap.forEach((date, commitCount) {
       if (date.isAfter(DateTime.now().subtract(Duration(days: days)))) {
         totalCount += commitCount;
@@ -99,7 +99,7 @@ class GitInfoRepository {
       throw Exception('Committer name is not set');
     }
     maxGitMessages = AppConstants.maxGitMessages;
-    Iterable<String> projectDirectoryPaths =
+    final projectDirectoryPaths =
         await buildHeatMap(baseDirectoryPath, committerName);
     final records = projectDirectoryPaths
         .map((path) => _createRecord(projectNameFromPath(path)))
@@ -112,14 +112,17 @@ class GitInfoRepository {
   }
 
   Future<Iterable<String>> buildHeatMap(
-      String baseDirectoryPath, String committerName) async {
+    String baseDirectoryPath,
+    String committerName,
+  ) async {
     _projectHeatMap.clear();
     currentDirectory = baseDirectoryPath;
     final projectDirectoryPaths = (await _getGitDirectories(baseDirectoryPath))
         .where((path) => path.isNotEmpty)
         .map((subdir) => '$baseDirectoryPath/$subdir'
             .replaceFirst('.git', '')
-            .replaceFirst('./', ''));
+              .replaceFirst('./', ''),
+        );
     for (final projectDirectory in projectDirectoryPaths) {
       final logLines = await getGitLogForProject(projectDirectory);
       final filteredLines = logLines
@@ -131,7 +134,9 @@ class GitInfoRepository {
   }
 
   void insertOverallRecord(
-      List<GitInfoRecord> records, HeatMap overAllHeatMap) {
+    List<GitInfoRecord> records,
+    HeatMap overAllHeatMap,
+  ) {
     records.insert(
       0,
       GitInfoRecord(
@@ -160,9 +165,9 @@ class GitInfoRepository {
   @visibleForTesting
   HeatMap heatMapFromLines(Iterable<String> lines) {
     final heatMap = <DateTime, int>{};
-    final List<DateTime> dateTimeList =
+    final dateTimeList =
         lines.map((line) => DateTime.parse(line.substring(0, 10))).toList();
-    for (var element in dateTimeList) {
+    for (final element in dateTimeList) {
       heatMap.update(
         element,
         (value) => 1 + value,
@@ -180,7 +185,8 @@ class GitInfoRepository {
             k,
             (value) => v + value,
             ifAbsent: () => v,
-          ));
+        ),
+      );
     }
     return totalHeatMap;
   }
@@ -188,7 +194,7 @@ class GitInfoRepository {
   @visibleForTesting
   int streakLengthFromHeatMap(HeatMap heatMap, DateTime now) {
     final today = DateTime(now.year, now.month, now.day);
-    int dayCount = 0;
+    var dayCount = 0;
     var date = today;
     while (heatMap.containsKey(date)) {
       dayCount++;

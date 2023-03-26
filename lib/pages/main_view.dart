@@ -24,8 +24,8 @@ class _MainViewState extends ConsumerState<MainView> {
   final appLegalese = '© ${DateTime.now().year} Alfred Schilken';
   final apppIcon = Image.asset(
     'assets/images/icon_32x32@2x.png',
-    width: 64.0,
-    height: 64.0,
+    width: 64,
+    height: 64,
   );
 
   @override

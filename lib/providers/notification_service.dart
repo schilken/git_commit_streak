@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:mixin_logger/mixin_logger.dart' as log;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mixin_logger/mixin_logger.dart' as log;
 
 class NotificationService {
   int id = 0;
@@ -41,7 +41,7 @@ class NotificationService {
     if (!isEnabled) {
       return;
     }
-    const NotificationDetails notificationDetails = NotificationDetails(
+    const notificationDetails = NotificationDetails(
       macOS: DarwinNotificationDetails(
         presentAlert: true,
         presentSound: true,
@@ -61,7 +61,7 @@ end tell'
 */
 
   Future<int> sendIMessage(String body, String recipient) async {
-    var process = await Process.run(
+    final process = await Process.run(
       'osascript',
       [
         '-e',

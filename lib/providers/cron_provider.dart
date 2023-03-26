@@ -6,7 +6,7 @@ import 'package:mixin_logger/mixin_logger.dart' as log;
 
 final schedulerStreamProvider = Provider<Stream<int>>((ref) {
   log.i('scheduleStreamProvider');
-  int id = 0;
+  var id = 0;
   final cron = Cron();
   final streamController = StreamController<int>();
   final taskHandle = cron.schedule(Schedule.parse('52 17,18,19 * * *'), () {

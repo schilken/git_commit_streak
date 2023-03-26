@@ -1,16 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print
 import 'package:flutter/foundation.dart';
-import 'package:git_commit_streak/utils/filesystem_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../utils/filesystem_utils.dart';
 import 'providers.dart';
 
+@immutable
 class AppState {
-  String message;
-  String appVersion;
-  String currentDirectory;
+  final String message;
+  final String appVersion;
+  final String currentDirectory;
 
-  AppState({
+  const AppState({
     required this.message,
     required this.appVersion,
     required this.currentDirectory,

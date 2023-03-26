@@ -21,14 +21,14 @@ class RecordListView extends StatelessWidget {
         final record = records[index];
         return Material(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: RecordTile(
               record: record,
             ),
           ),
         );
       },
-      separatorBuilder: (BuildContext context, int index) {
+      separatorBuilder: (context, index) {
         return const Divider(
           height: 0,
           thickness: 2,

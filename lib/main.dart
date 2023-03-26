@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:macos_ui/macos_ui.dart';
+import 'package:mixin_logger/mixin_logger.dart' as log;
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mixin_logger/mixin_logger.dart' as log;
 
 import 'pages/main_view.dart';
 import 'providers/providers.dart';
@@ -24,7 +24,8 @@ Future<void> main() async {
       sharedPreferencesProvider.overrideWithValue(sharedPreferences),
     ],
     child: const MainApp(),
-  ));
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {

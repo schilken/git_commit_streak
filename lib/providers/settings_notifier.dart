@@ -55,7 +55,7 @@ class SettingsNotifier extends Notifier<SettingsState> {
       ref.read(notificationServiceProvider).init();
       Future<void>.delayed(
         const Duration(milliseconds: 100),
-        () => scheduleIfValidAndActive(),
+        scheduleIfValidAndActive,
       );
     }
     return SettingsState(
@@ -117,7 +117,7 @@ class SettingsNotifier extends Notifier<SettingsState> {
     scheduleIfValidAndActive();
   }
 
-  scheduleIfValidAndActive() {
+  void scheduleIfValidAndActive() {
     if (state.reminderHhMm.length != 5) {
       state = state.copyWith(validationMessage: 'time is not set');
     } else if (state.isSendIMessageActive && state.recipientName.isEmpty) {

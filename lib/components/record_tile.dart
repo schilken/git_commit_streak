@@ -52,7 +52,8 @@ class _RecordTileState extends State<RecordTile> {
               ),
               gapHeight4,
               Text(
-                  'Commits Total: ${widget.record.totalCommitCount} – last month: ${widget.record.commitCountLast30days} – today: ${widget.record.commitCountToday}'),
+                'Commits Total: ${widget.record.totalCommitCount} – last month: ${widget.record.commitCountLast30days} – today: ${widget.record.commitCountToday}',
+              ),
               gapHeight4,
               Text(infoForSelectedDate ?? 'No date selected'),
               HeatMapWidget(

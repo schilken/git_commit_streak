@@ -5,19 +5,20 @@ import 'package:intl/intl.dart';
 import '../utils/utils.dart';
 
 class HeatMapWidget extends StatelessWidget {
-  final Map<DateTime, int> heatMapData;
-  final StringCallback onClick;
-  final int timeRangeInDays;
   const HeatMapWidget(
     this.heatMapData,
     this.timeRangeInDays,
     this.onClick, {
     super.key,
   });
+  final Map<DateTime, int> heatMapData;
+  final StringCallback onClick;
+  final int timeRangeInDays;
 
-  _onClick(DateTime date) {
+  void _onClick(DateTime date) {
     onClick(
-        '${DateFormat("yyyy-MM-dd").format(date)} : ${heatMapData[date] ?? 'no'} commits');
+      '${DateFormat("yyyy-MM-dd").format(date)} : ${heatMapData[date] ?? 'no'} commits',
+    );
   }
 
   @override
@@ -27,7 +28,6 @@ class HeatMapWidget extends StatelessWidget {
       endDate: DateTime.now(),
       datasets: heatMapData,
       colorMode: ColorMode.color,
-      showText: false,
       scrollable: true,
       colorsets: {
         1: Colors.green.shade100,
