@@ -4,8 +4,8 @@ import 'package:mixin_logger/mixin_logger.dart' as log;
 
 class SystemCommand {
   Future<List<String>> runShellCommand(
-    executable,
-    arguments,
+    String executable,
+    List<String> arguments,
     String directory,
   ) async {
     final process = await Process.run(
@@ -17,7 +17,7 @@ class SystemCommand {
       log.w('stderr: ${process.stderr} $directory');
       return [];
     } else {
-      final lines = process.stdout.split('\n');
+      final lines = (process.stdout as String).split('\n');
       return lines;
     }
   }
