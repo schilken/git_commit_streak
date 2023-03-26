@@ -58,8 +58,7 @@ final todayCommitCountAsyncProvider = Provider<AsyncValue<int>>((ref) {
   return gitInfoAsyncValue.maybeMap<AsyncValue<int>>(data: (data) {
     final records = data.value ?? [];
     return AsyncValue.data(records[0].commitCountToday);
-      },
-      orElse: () {
+  }, orElse: () {
     return const AsyncValue.loading();
   });
 });

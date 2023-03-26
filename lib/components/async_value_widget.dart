@@ -12,7 +12,7 @@ class AsyncValueWidget<T> extends StatelessWidget {
   });
   final AsyncValue<T> value;
   final Widget Function(T) data;
-  final double spinnerRadius; 
+  final double spinnerRadius;
 
   @override
   Widget build(BuildContext context) {

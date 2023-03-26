@@ -11,7 +11,6 @@ typedef ProjectHeatMap = Map<String, HeatMap>;
 
 // find . -type d -name ".git"
 class GitInfoRepository {
-  
   GitInfoRepository({
     required this.systemCommand,
   });
@@ -49,7 +48,6 @@ class GitInfoRepository {
       directoryPath,
     );
   }
-
 
   GitInfoRecord? _createRecord(String projectName) {
     final heatMap = _projectHeatMap[projectName] ?? {};

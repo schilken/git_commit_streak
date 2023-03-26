@@ -34,7 +34,6 @@ class RecordListView extends StatelessWidget {
           thickness: 2,
         );
       },
-
     );
   }
 }

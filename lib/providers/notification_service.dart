@@ -73,7 +73,6 @@ end tell'
     }
     return process.exitCode;
   }
-
 }
 
 final notificationServiceProvider = Provider<NotificationService>((ref) {

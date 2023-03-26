@@ -133,8 +133,6 @@ class SettingsNotifier extends Notifier<SettingsState> {
       }
     }
   }
-
-
 }
 
 final settingsNotifier =

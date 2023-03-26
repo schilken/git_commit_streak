@@ -120,8 +120,8 @@ class CommitsToday extends StatelessWidget {
         return count == 0
             ? const Text(
                 'Not yet committed today',
-            style: TextStyle(color: Colors.red),
-          )
+                style: TextStyle(color: Colors.red),
+              )
             : Text('$count commits today👍');
       },
     );
@@ -130,7 +130,7 @@ class CommitsToday extends StatelessWidget {
 
 ToolBarPullDownButton createToolBarPullDownButton(
     WidgetRef ref, String currentDirectory) {
-  final userHomeDirectory = Platform.environment['HOME'];  
+  final userHomeDirectory = Platform.environment['HOME'];
   return ToolBarPullDownButton(
     label: "Actions",
     icon: CupertinoIcons.ellipsis_circle,
@@ -160,4 +160,3 @@ ToolBarPullDownButton createToolBarPullDownButton(
     ],
   );
 }
-

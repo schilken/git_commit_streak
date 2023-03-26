@@ -17,8 +17,7 @@ Future<void> main() async {
   final pubspec = Pubspec.parse(await rootBundle.loadString('pubspec.yaml'));
   final version = pubspec.version;
   await log.initLogger(loggerFolder);
-  log.i(
-      'version from pubspec.yaml: $version');
+  log.i('version from pubspec.yaml: $version');
   sharedPreferences.setString('appVersion', version.toString());
   runApp(ProviderScope(
     overrides: [

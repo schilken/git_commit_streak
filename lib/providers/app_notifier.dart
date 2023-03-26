@@ -62,7 +62,6 @@ class AppNotifier extends Notifier<AppState> {
     state = state.copyWith(currentDirectory: reducedPath);
     debugPrint('setDefaultDirectory: $reducedPath');
   }
-
 }
 
 final appNotifier = NotifierProvider<AppNotifier, AppState>(AppNotifier.new);

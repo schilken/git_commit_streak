@@ -21,6 +21,7 @@ class PreferencesRepository {
   Future<void> setCommitterName(String name) async {
     await _prefs.setString('committerName', name);
   }
+
   String get committerName {
     return _prefs.getString('committerName') ?? '';
   }
@@ -59,7 +60,6 @@ class PreferencesRepository {
   String get reminderHhMm {
     return _prefs.getString('reminderHhMm') ?? '19:00';
   }
-
 }
 
 final preferencesRepositoryProvider = Provider<PreferencesRepository>(
