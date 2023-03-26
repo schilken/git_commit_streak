@@ -17,6 +17,7 @@ class ValueWithPercentage {
     required this.referenceValue,
   });
   int get inPercent => (value / referenceValue * 100).toInt();
+  int get intValue => value.toInt();
 }
 
 class GitInfoNotifier extends AsyncNotifier<List<GitInfoRecord>?> {
