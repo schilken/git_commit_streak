@@ -35,6 +35,14 @@ class GitInfoNotifier extends AsyncNotifier<List<GitInfoRecord>?> {
   }
 
   bool get isLoading => state.isLoading;
+
+  int countDaysWithCommit({required int days}) {
+    return _gitInfoRepository.countDaysWithCommit(days: days);
+  }
+
+  int longestStreak() {
+    return _gitInfoRepository.longestStreak();
+  }
 }
 
 final gitInfoNotifier =

@@ -204,6 +204,29 @@ class GitInfoRepository {
     }
     return dayCount;
   }
+
+  int _countDaysInHeatMap(HeatMap heatMap, DateTime startDate) {
+    var dayCount = 0;
+    heatMap.forEach((date, commitCount) {
+      if (date.isAfter(startDate)) {
+        dayCount++;
+      }
+    });
+    return dayCount;
+  }
+
+  int countDaysWithCommit({required int days}) {
+    final overAllHeatMap = calculateOverAllHeatMap(_projectHeatMap);
+    final dayCountWithCommit = _countDaysInHeatMap(
+      overAllHeatMap,
+      DateTime.now().subtract(Duration(days: days)),
+    );
+    return dayCountWithCommit;
+  }
+
+  int longestStreak() {
+    return 0;
+  }
 }
 
 final gitInfoRepositoryProvider = Provider<GitInfoRepository>((ref) {
