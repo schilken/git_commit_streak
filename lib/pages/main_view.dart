@@ -9,6 +9,7 @@ import '../providers/reminder_provider.dart';
 import 'help_page.dart';
 import 'home_page.dart';
 import 'settings_page.dart';
+import 'statistics_page.dart';
 
 class MainView extends ConsumerStatefulWidget {
   const MainView({super.key});
@@ -67,6 +68,10 @@ class _MainViewState extends ConsumerState<MainView> {
               label: Text('Commits Heat Map'),
             ),
             SidebarItem(
+              leading: MacosIcon(CupertinoIcons.graph_circle),
+              label: Text('Statistics'),
+            ),
+            SidebarItem(
               leading: MacosIcon(CupertinoIcons.info),
               label: Text('Help'),
             ),
@@ -81,6 +86,7 @@ class _MainViewState extends ConsumerState<MainView> {
         index: _pageIndex,
         children: const [
           HomePage(),
+          StatisticsPage(),
           HelpPage(),
           SettingsPage(),
         ],
