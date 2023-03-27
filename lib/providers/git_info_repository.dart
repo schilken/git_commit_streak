@@ -9,6 +9,18 @@ import '../utils/system_command.dart';
 typedef HeatMap = Map<DateTime, int>;
 typedef ProjectHeatMap = Map<String, HeatMap>;
 
+class Streak {
+  final DateTime startDate;
+  final DateTime endDate;
+
+  Streak({
+    required this.startDate,
+    required this.endDate,
+  });
+
+  int get length => endDate.difference(startDate).inDays;
+}
+
 // find . -type d -name ".git"
 class GitInfoRepository {
   GitInfoRepository({
@@ -224,8 +236,10 @@ class GitInfoRepository {
     return dayCountWithCommit;
   }
 
-  int longestStreak() {
-    return 0;
+  Streak longestStreak() {
+    return Streak(
+        startDate: DateTime.now().subtract(Duration(days: 100)),
+        endDate: DateTime.now());
   }
 }
 

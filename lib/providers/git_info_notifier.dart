@@ -55,7 +55,7 @@ class GitInfoNotifier extends AsyncNotifier<List<GitInfoRecord>?> {
     );
   }
 
-  int longestStreak() {
+  Streak longestStreak() {
     return _gitInfoRepository.longestStreak();
   }
 }
