@@ -46,8 +46,8 @@ class _RecordTileState extends State<RecordTile> {
               ),
               gapHeight4,
               CapacityIndicator(
-                value: 100.0 * math.min(widget.record.streakLength, 30) / 30.0,
-                splits: 30,
+                value: 100.0 * math.min(widget.record.streakLength, 90) / 90.0,
+                splits: 90,
                 discrete: true,
               ),
               gapHeight4,
