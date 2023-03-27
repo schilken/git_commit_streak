@@ -237,10 +237,8 @@ final _streakList = <Streak>[];
     return dayCountWithCommit;
   }
 
-  Streak longestStreak() {
+  void _initStreaks() {
     final overAllHeatMap = calculateOverAllHeatMap(_projectHeatMap);
-    _streakList.clear();
-    _streakList.add(Streak(startDate: DateTime.now(), endDate: DateTime.now()));
     var endDate = DateTime.now();
     do {
       var length = streakLengthFromHeatMap(overAllHeatMap, endDate);
@@ -258,8 +256,16 @@ final _streakList = <Streak>[];
       endDate = endDate.subtract(Duration(days: length));
     } while (
         endDate.isAfter(DateTime.now().subtract(const Duration(days: 360))));
-    return _streakList.first;
+    _streakList.sort((r1, r2) => r2.length.compareTo(r1.length));
   }
+
+  List<Streak> getStreaks() {
+    if (_streakList.isEmpty) {
+      _initStreaks();
+    }
+    return _streakList;
+  }
+
 }
 
 final gitInfoRepositoryProvider = Provider<GitInfoRepository>((ref) {
