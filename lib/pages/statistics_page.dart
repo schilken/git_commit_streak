@@ -57,6 +57,7 @@ class StatisticsView extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(40),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           gapHeight16,
           LabelAndValue(
@@ -79,7 +80,19 @@ class StatisticsView extends ConsumerWidget {
             '${notifier.countDaysWithCommit(days: 360).intValue} → ${notifier.countDaysWithCommit(days: 360).inPercent}%',
           ),
           gapHeight24,
-          StreakView('Longest Streak', notifier.longestStreak()),
+          const Text(
+            'Streaks',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          gapHeight8,
+          for (final streak in notifier.getStreaks())
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: StreakView(streak),
+            ),
         ],
       ),
     );
@@ -111,11 +124,9 @@ class LabelAndValue extends StatelessWidget {
 
 class StreakView extends StatelessWidget {
   const StreakView(
-    this.label,
     this.streak, {
     super.key,
   });
-  final String label;
   final Streak streak;
 
   @override
@@ -123,11 +134,25 @@ class StreakView extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 200,
-          child: Text(label),
+          width: 30,
+          child: Text(
+            '${streak.length}',
+          ),
         ),
         Text(
-          '${streak.length} days from ${streak.startDate.inIsoFormat} to ${streak.endDate.inIsoFormat}',
+          'days, ',
+        ),
+        SizedBox(
+          width: 90,
+          child: Text(
+            '${streak.startDate.inIsoFormat}',
+          ),
+        ),
+        Text(
+          ' - ',
+        ),
+        Text(
+          '${streak.endDate.inIsoFormat}',
         ),
       ],
     );
