@@ -8,6 +8,7 @@ import '../components/settings_controls_view.dart';
 import '../providers/git_info_notifier.dart';
 import '../providers/git_info_repository.dart';
 import '../utils/app_sizes.dart';
+import 'main_view.dart';
 
 class StatisticsPage extends StatelessWidget {
   const StatisticsPage({super.key});
@@ -51,6 +52,8 @@ class StatisticsView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(gitInfoNotifier.notifier);
+    // just for rebuilding the view if the StatisticsPage is shown
+    ref.watch(statisticsRefreshProvider);
     return Padding(
       padding: const EdgeInsets.all(40),
       child: Column(

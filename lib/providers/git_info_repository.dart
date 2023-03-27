@@ -31,6 +31,7 @@ class GitInfoRepository {
 
   final ProjectHeatMap _projectHeatMap = {};
   String? currentDirectory;
+final _streakList = <Streak>[];
   int maxGitMessages = AppConstants.maxGitMessages;
 
   Future<List<String>> _getGitDirectories(String directory) async {
@@ -237,9 +238,27 @@ class GitInfoRepository {
   }
 
   Streak longestStreak() {
-    return Streak(
-        startDate: DateTime.now().subtract(Duration(days: 100)),
-        endDate: DateTime.now());
+    final overAllHeatMap = calculateOverAllHeatMap(_projectHeatMap);
+    _streakList.clear();
+    _streakList.add(Streak(startDate: DateTime.now(), endDate: DateTime.now()));
+    var endDate = DateTime.now();
+    do {
+      var length = streakLengthFromHeatMap(overAllHeatMap, endDate);
+      if (length > 7) {
+        _streakList.add(
+          Streak(
+            startDate: endDate.subtract(Duration(days: length)),
+            endDate: endDate,
+          ),
+        );
+      }
+      if (length == 0) {
+        length = 1;
+      }
+      endDate = endDate.subtract(Duration(days: length));
+    } while (
+        endDate.isAfter(DateTime.now().subtract(const Duration(days: 360))));
+    return _streakList.first;
   }
 }
 

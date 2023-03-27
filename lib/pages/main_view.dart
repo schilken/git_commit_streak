@@ -11,6 +11,11 @@ import 'home_page.dart';
 import 'settings_page.dart';
 import 'statistics_page.dart';
 
+// this provider triggers a rebuild of the StatisticsView
+final statisticsRefreshProvider = StateProvider<int>((ref) {
+  return 0;
+});
+
 class MainView extends ConsumerStatefulWidget {
   const MainView({super.key});
 
@@ -60,6 +65,12 @@ class _MainViewState extends ConsumerState<MainView> {
         builder: (context, scrollController) => SidebarItems(
           currentIndex: _pageIndex,
           onChanged: (index) {
+            if (index == 1) {
+              // trigger a rebuild of the StatisticsView
+              ref
+                  .read(statisticsRefreshProvider.notifier)
+                  .update((state) => state + 1);
+            }
             setState(() => _pageIndex = index);
           },
           items: const [
