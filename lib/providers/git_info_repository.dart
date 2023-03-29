@@ -31,7 +31,7 @@ class GitInfoRepository {
 
   final ProjectHeatMap _projectHeatMap = {};
   String? currentDirectory;
-final _streakList = <Streak>[];
+  final _streakList = <Streak>[];
   int maxGitMessages = AppConstants.maxGitMessages;
 
   Future<List<String>> _getGitDirectories(String directory) async {
@@ -132,8 +132,9 @@ final _streakList = <Streak>[];
     currentDirectory = baseDirectoryPath;
     final projectDirectoryPaths = (await _getGitDirectories(baseDirectoryPath))
         .where((path) => path.isNotEmpty)
-        .map((subdir) => '$baseDirectoryPath/$subdir'
-            .replaceFirst('.git', '')
+        .map(
+          (subdir) => '$baseDirectoryPath/$subdir'
+              .replaceFirst('.git', '')
               .replaceFirst('./', ''),
         );
     for (final projectDirectory in projectDirectoryPaths) {
@@ -194,10 +195,11 @@ final _streakList = <Streak>[];
   HeatMap calculateOverAllHeatMap(ProjectHeatMap projectHeatMap) {
     final totalHeatMap = <DateTime, int>{};
     for (final heatMap in projectHeatMap.values) {
-      heatMap.forEach((k, v) => totalHeatMap.update(
-            k,
-            (value) => v + value,
-            ifAbsent: () => v,
+      heatMap.forEach(
+        (k, v) => totalHeatMap.update(
+          k,
+          (value) => v + value,
+          ifAbsent: () => v,
         ),
       );
     }
@@ -265,7 +267,6 @@ final _streakList = <Streak>[];
     }
     return _streakList;
   }
-
 }
 
 final gitInfoRepositoryProvider = Provider<GitInfoRepository>((ref) {

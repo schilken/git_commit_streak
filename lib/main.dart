@@ -19,11 +19,12 @@ Future<void> main() async {
   await log.initLogger(loggerFolder);
   log.i('version from pubspec.yaml: $version');
   sharedPreferences.setString('appVersion', version.toString());
-  runApp(ProviderScope(
-    overrides: [
-      sharedPreferencesProvider.overrideWithValue(sharedPreferences),
-    ],
-    child: const MainApp(),
+  runApp(
+    ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+      ],
+      child: const MainApp(),
     ),
   );
 }

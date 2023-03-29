@@ -68,19 +68,19 @@ class HomePage extends ConsumerWidget {
                   children: [
                     Expanded(
                       child: AsyncValueWidget(
-                          value: gitInfoAsyncValue,
-                          data: (records) {
-                            if (records == null) {
-                              return const Center(
+                        value: gitInfoAsyncValue,
+                        data: (records) {
+                          if (records == null) {
+                            return const Center(
                               child: Text('Not yet scanned'),
                             );
-                            }
-                            if (records.isEmpty) {
-                              return const Center(
+                          }
+                          if (records.isEmpty) {
+                            return const Center(
                               child: Text('No directories found'),
                             );
-                            }
-                            return RecordListView(records, ref);
+                          }
+                          return RecordListView(records, ref);
                         },
                       ),
                     ),
@@ -144,8 +144,7 @@ ToolBarPullDownButton createToolBarPullDownButton(
       MacosPulldownMenuItem(
         title: const Text('Choose Folder'),
         onTap: () async {
-          final selectedDirectory =
-              await FilePicker.platform.getDirectoryPath(
+          final selectedDirectory = await FilePicker.platform.getDirectoryPath(
             initialDirectory: userHomeDirectory,
           );
           if (selectedDirectory != null) {

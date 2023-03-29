@@ -51,28 +51,28 @@ class _TextFieldWithLabelState extends State<TextFieldWithLabel> {
         _controller.text = '';
         widget.onSubmitted('');
         Future<void>.delayed(
-            const Duration(milliseconds: 10),
-            () => showMacosAlertDialog(
-                  context: context,
-                  builder: (context) => MacosAlertDialog(
-                    appIcon: const MacosIcon(
-                      CupertinoIcons.exclamationmark_triangle,
-                      size: 32,
-                      color: Colors.orangeAccent,
-                    ),
-                    title: const Text(
-                      'Input is not valid',
-                    ),
-                    message: Text(
-                      'Please, ${widget.placeholder}',
-                    ),
-                    //horizontalActions: false,
-                    primaryButton: PushButton(
-                      buttonSize: ButtonSize.large,
-                      onPressed: Navigator.of(context).pop,
-                      child: const Text('OK'),
-                    ),
-                  ),
+          const Duration(milliseconds: 10),
+          () => showMacosAlertDialog(
+            context: context,
+            builder: (context) => MacosAlertDialog(
+              appIcon: const MacosIcon(
+                CupertinoIcons.exclamationmark_triangle,
+                size: 32,
+                color: Colors.orangeAccent,
+              ),
+              title: const Text(
+                'Input is not valid',
+              ),
+              message: Text(
+                'Please, ${widget.placeholder}',
+              ),
+              //horizontalActions: false,
+              primaryButton: PushButton(
+                buttonSize: ButtonSize.large,
+                onPressed: Navigator.of(context).pop,
+                child: const Text('OK'),
+              ),
+            ),
           ),
         );
       }
