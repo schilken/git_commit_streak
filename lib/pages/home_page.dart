@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import '../components/async_value_widget.dart';
@@ -116,16 +117,17 @@ class CommitsToday extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final countAsyncValue = ref.watch(todayCommitCountAsyncProvider);
+    final todayAsMMdd = DateFormat("yyyy-MM-dd").format(DateTime.now());
     return AsyncValueWidget(
       value: countAsyncValue,
       spinnerRadius: 10,
       data: (count) {
         return count == 0
-            ? const Text(
-                'Not yet committed today',
+            ? Text(
+                'Not yet committed today($todayAsMMdd)',
                 style: TextStyle(color: Colors.red),
               )
-            : Text('$count commits today👍');
+            : Text('$count commits today($todayAsMMdd)👍');
       },
     );
   }
