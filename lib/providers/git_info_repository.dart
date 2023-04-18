@@ -151,6 +151,16 @@ class GitInfoRepository {
     List<GitInfoRecord> records,
     HeatMap overAllHeatMap,
   ) {
+    final streakLength = streakLengthFromHeatMap(
+      overAllHeatMap,
+      DateTime.now(),
+    );
+    final streakLengthTilYesterday = streakLength > 0
+        ? null
+        : streakLengthFromHeatMap(
+            overAllHeatMap,
+            DateTime.now().subtract(const Duration(days: 1)),
+          );
     records.insert(
       0,
       GitInfoRecord(
@@ -159,14 +169,8 @@ class GitInfoRepository {
         commitCountLast30days: _commitCountLastDays(overAllHeatMap, 30),
         commitCountToday: _commitCountLastDays(overAllHeatMap, 1),
         latestCommit: latestCommitFromHeatMap(overAllHeatMap),
-        streakLength: streakLengthFromHeatMap(
-          overAllHeatMap,
-          DateTime.now(),
-        ),
-        streakLengthTilYesterday: streakLengthFromHeatMap(
-          overAllHeatMap,
-          DateTime.now().subtract(const Duration(days: 1)),
-        ),
+        streakLength: streakLength,
+        streakLengthTilYesterday: streakLengthTilYesterday,
         timeRangeInDays: AppConstants.timeRangeInDays,
         heatMapData: overAllHeatMap,
       ),
