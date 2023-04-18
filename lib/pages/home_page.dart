@@ -36,7 +36,7 @@ class HomePage extends ConsumerWidget {
                 MacosWindowScope.of(context).toggleSidebar();
               },
             ),
-            titleWidth: 450,
+            titleWidth: 500,
             title: Row(
               children: [
                 const Text('Git Commit Streak'),

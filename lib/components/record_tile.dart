@@ -40,9 +40,23 @@ class _RecordTileState extends State<RecordTile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (widget.record.heatMapData.isNotEmpty) ...[
-              Text(
-                'Streak: ${widget.record.streakLength} days',
-                style: MacosTheme.of(context).typography.title2,
+              Row(
+                children: [
+                  Text(
+                    'Streak: ${widget.record.streakLength} days',
+                    style: MacosTheme.of(context).typography.title2,
+                  ),
+                  gapWidth16,
+                  if (widget.record.streakLengthTilYesterday != null &&
+                      widget.record.streakLengthTilYesterday! > 10)
+                    Text(
+                      'Do not break this streak of ${widget.record.streakLengthTilYesterday} days!',
+                      style: MacosTheme.of(context)
+                          .typography
+                          .title2
+                          .copyWith(color: Colors.red),
+                    ),
+                ],
               ),
               gapHeight4,
               CapacityIndicator(

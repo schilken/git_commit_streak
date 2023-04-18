@@ -163,6 +163,10 @@ class GitInfoRepository {
           overAllHeatMap,
           DateTime.now(),
         ),
+        streakLengthTilYesterday: streakLengthFromHeatMap(
+          overAllHeatMap,
+          DateTime.now().subtract(const Duration(days: 1)),
+        ),
         timeRangeInDays: AppConstants.timeRangeInDays,
         heatMapData: overAllHeatMap,
       ),

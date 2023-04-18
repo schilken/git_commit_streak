@@ -2,7 +2,7 @@ name: git_commit_streak
 description: A tool that shows the number of consecutive days with at least one
   commit per day.
 publish_to: "none"
-version: 1.1.0
+version: 1.2.0
 
 environment:
   sdk: ">=2.19.0 <3.0.0"

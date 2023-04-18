@@ -5,6 +5,7 @@ class GitInfoRecord {
   final Map<DateTime, int> heatMapData;
   final DateTime latestCommit;
   final int streakLength;
+  final int? streakLengthTilYesterday;
   final int timeRangeInDays;
   final int commitCountLast30days;
   final int commitCountToday;
@@ -15,6 +16,7 @@ class GitInfoRecord {
     this.heatMapData = const {},
     required this.latestCommit,
     required this.streakLength,
+    this.streakLengthTilYesterday,
     required this.timeRangeInDays,
     required this.commitCountLast30days,
     required this.commitCountToday,
@@ -29,6 +31,7 @@ class GitInfoRecord {
     Map<DateTime, int>? heatMapData,
     DateTime? latestCommit,
     int? streakLength,
+    int? streakLengthTilYesterday,
     int? timeRangeInDays,
     int? commitCountLast30days,
     int? commitCountToday,
@@ -39,6 +42,8 @@ class GitInfoRecord {
       heatMapData: heatMapData ?? this.heatMapData,
       latestCommit: latestCommit ?? this.latestCommit,
       streakLength: streakLength ?? this.streakLength,
+      streakLengthTilYesterday:
+          streakLengthTilYesterday ?? this.streakLengthTilYesterday,
       timeRangeInDays: timeRangeInDays ?? this.timeRangeInDays,
       commitCountLast30days:
           commitCountLast30days ?? this.commitCountLast30days,
